@@ -126,7 +126,7 @@
 let DATA = null;
 const SEASON_NAME = "2026 Golf Season";
 const MIN_ROUNDS  = 5;
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzpowFse4mMG7BXMhw3nK4Z5L0RPYScUMdml-6ALNq_XhU9QLfOazyYLSoE8BR0Q/pub?gid=13083685&single=true&output=csv";
+const SHEET_URL = "https://corsproxy.io/?url=https://docs.google.com/spreadsheets/d/e/2PACX-1vQzpowFse4mMG7BXMhw3nK4Z5L0RPYScUMdml-6ALNq_XhU9QLfOazyYLSoE8BR0Q/pub?gid=13083685%26single=true%26output=csv";
 function parseCSV(text){const rows=[];const lines=text.split('\n');for(const line of lines){if(!line.trim())continue;const row=[];let field='',inQuotes=false;for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'){inQuotes=!inQuotes;continue;}if(ch===','&&!inQuotes){row.push(field.trim());field='';continue;}field+=ch;}row.push(field.trim());rows.push(row);}return rows;}
 function buildData(rows){
 let headerIdx=-1;
