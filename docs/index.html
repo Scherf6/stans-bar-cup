@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golf Leaderboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep:   #0d2b1a;
+    --green-dark:   #163d26;
+    --green-mid:    #1e5c38;
+    --green-bright: #2d8653;
+    --green-light:  #4caf76;
+    --gold:         #c9a84c;
+    --gold-light:   #f0d080;
+    --silver:       #a8b4b8;
+    --bronze:       #b87333;
+    --cream:        #f5f0e8;
+    --cream-dark:   #ede8dd;
+    --text-dark:    #1a1a1a;
+    --text-mid:     #4a4a4a;
+    --text-light:   #8a8a8a;
+    --white:        #ffffff;
+    --shadow:       0 4px 24px rgba(0,0,0,0.12);
+    --shadow-lg:    0 12px 48px rgba(0,0,0,0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--green-deep);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% -10%, rgba(45,134,83,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 90% 110%, rgba(13,43,26,0.8) 0%, transparent 60%),
+      repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.012) 40px, rgba(255,255,255,0.012) 41px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .page-wrap { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 20px 60px; }
+  .site-header { text-align: center; padding: 56px 20px 40px; }
+  .header-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--green-light); margin-bottom: 14px; opacity: 0.9; }
+  .header-title { font-family: 'Playfair Display', serif; font-size: clamp(36px, 7vw, 72px); font-weight: 900; line-height: 1.0; color: var(--cream); letter-spacing: -1px; text-shadow: 0 2px 24px rgba(0,0,0,0.4); }
+  .header-title span { color: var(--gold); display: block; }
+  .header-meta { margin-top: 18px; font-size: 13px; color: var(--green-light); font-weight: 300; letter-spacing: 0.5px; }
+  .header-meta strong { color: var(--gold-light); font-weight: 500; }
+  .tabs { display: flex; justify-content: center; gap: 6px; margin: 32px 0 28px; flex-wrap: wrap; }
+  .tab { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: var(--cream); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.5px; padding: 10px 24px; border-radius: 100px; cursor: pointer; transition: all 0.2s; outline: none; }
+  .tab:hover { background: rgba(255,255,255,0.12); }
+  .tab.active { background: var(--gold); border-color: var(--gold); color: var(--green-deep); font-weight: 600; }
+  .card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.09); border-radius: 16px; backdrop-filter: blur(8px); overflow: hidden; }
+  .podium { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 28px; }
+  .podium-card { border-radius: 14px; padding: 24px 16px 20px; text-align: center; position: relative; overflow: hidden; transition: transform 0.2s; }
+  .podium-card:hover { transform: translateY(-3px); }
+  .podium-card::before { content: ''; position: absolute; inset: 0; opacity: 0.12; background: radial-gradient(circle at 50% 0%, white, transparent 70%); }
+  .podium-1 { background: linear-gradient(160deg, #3d2800, #1a1000); border: 1px solid var(--gold); }
+  .podium-2 { background: linear-gradient(160deg, #1e2a2e, #0e1518); border: 1px solid var(--silver); }
+  .podium-3 { background: linear-gradient(160deg, #2e1a08, #160d04); border: 1px solid var(--bronze); }
+  .podium-medal { font-size: 28px; display: block; margin-bottom: 8px; }
+  .podium-pos { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+  .podium-1 .podium-pos { color: var(--gold); }
+  .podium-2 .podium-pos { color: var(--silver); }
+  .podium-3 .podium-pos { color: var(--bronze); }
+  .podium-name { font-family: 'Playfair Display', serif; font-size: clamp(15px, 2.5vw, 20px); font-weight: 700; color: var(--cream); margin-bottom: 8px; line-height: 1.2; }
+  .podium-pts { font-size: 28px; font-weight: 600; color: var(--gold-light); font-family: 'DM Mono', monospace; display: block; }
+  .podium-sub { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+  .lb-table { width: 100%; border-collapse: collapse; }
+  .lb-table th { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--green-light); padding: 14px 16px; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.08); white-space: nowrap; }
+  .lb-table th:nth-child(2) { text-align: left; }
+  .lb-table td { padding: 14px 16px; text-align: right; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05); white-space: nowrap; transition: background 0.15s; }
+  .lb-table td:nth-child(2) { text-align: left; }
+  .lb-table tr:last-child td { border-bottom: none; }
+  .lb-table tbody tr:hover td { background: rgba(255,255,255,0.04); }
+  .lb-pos { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text-light); font-weight: 500; }
+  .lb-pos.p1 { color: var(--gold); }
+  .lb-pos.p2 { color: var(--silver); }
+  .lb-pos.p3 { color: var(--bronze); }
+  .lb-name { font-weight: 600; font-size: 15px; color: var(--cream); }
+  .lb-hcp  { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+  .lb-pts { font-family: 'DM Mono', monospace; font-size: 16px; font-weight: 500; color: var(--gold-light); }
+  .badge { display: inline-block; font-size: 10px; font-family: 'DM Mono', monospace; letter-spacing: 1px; padding: 3px 9px; border-radius: 100px; text-transform: uppercase; font-weight: 500; }
+  .badge-q  { background: rgba(76,175,118,0.2); color: var(--green-light); border: 1px solid rgba(76,175,118,0.3); }
+  .badge-nm { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.25); }
+  .win-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); margin-right: 3px; vertical-align: middle; }
+  .round-card { border-radius: 14px; overflow: hidden; margin-bottom: 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+  .round-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: rgba(255,255,255,0.05); cursor: pointer; user-select: none; transition: background 0.15s; }
+  .round-header:hover { background: rgba(255,255,255,0.09); }
+  .round-date { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--cream); }
+  .round-course { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+  .round-toggle { color: var(--green-light); font-size: 20px; transition: transform 0.2s; }
+  .round-toggle.open { transform: rotate(180deg); }
+  .round-scores { display: none; }
+  .round-scores.open { display: block; }
+  .score-row { display: grid; grid-template-columns: 36px 1fr 58px 58px 58px 58px; align-items: center; padding: 10px 20px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 13px; }
+  .score-row:nth-child(even) { background: rgba(255,255,255,0.02); }
+  .score-place { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: var(--text-light); }
+  .score-place.p1 { color: var(--gold); }
+  .score-name  { font-weight: 500; color: var(--cream); }
+  .score-val   { text-align: right; font-family: 'DM Mono', monospace; color: var(--cream); }
+  .score-net   { text-align: right; font-family: 'DM Mono', monospace; color: var(--gold-light); font-weight: 600; }
+  .score-pts   { text-align: right; font-family: 'DM Mono', monospace; color: var(--green-light); font-size: 12px; }
+  .score-col-hdr { display: grid; grid-template-columns: 36px 1fr 58px 58px 58px 58px; padding: 8px 20px; background: rgba(0,0,0,0.2); border-top: 1px solid rgba(255,255,255,0.06); }
+  .score-col-hdr span { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--green-light); text-align: right; }
+  .score-col-hdr span:nth-child(2) { text-align: left; }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .stat-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.09); border-radius: 12px; padding: 20px; text-align: center; }
+  .stat-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); font-family: 'DM Mono', monospace; margin-bottom: 10px; }
+  .stat-value { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--gold); }
+  .stat-sub   { font-size: 12px; color: var(--text-light); margin-top: 4px; }
+  .state-msg { text-align: center; padding: 80px 20px; color: var(--text-light); }
+  .state-msg .emoji { font-size: 48px; display: block; margin-bottom: 16px; }
+  .state-msg h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--cream); margin-bottom: 8px; }
+  .site-footer { text-align: center; padding: 32px 20px; font-size: 11px; color: rgba(255,255,255,0.2); font-family: 'DM Mono', monospace; letter-spacing: 1px; }
+  @media (max-width: 640px) {
+    .podium { grid-template-columns: 1fr; max-width: 280px; margin-left: auto; margin-right: auto; }
+    .lb-table th:nth-child(n+5), .lb-table td:nth-child(n+5) { display: none; }
+    .score-row, .score-col-hdr { grid-template-columns: 32px 1fr 52px 52px; }
+    .score-row > *:nth-child(n+5), .score-col-hdr > *:nth-child(n+5) { display: none; }
+  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-up { animation: fadeUp 0.5s ease both; }
+  .fade-up:nth-child(2) { animation-delay: 0.07s; }
+  .fade-up:nth-child(3) { animation-delay: 0.14s; }
+  .fade-up:nth-child(4) { animation-delay: 0.21s; }
+  .fade-up:nth-child(n+5) { animation-delay: 0.28s; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <header class="site-header fade-up">
+    <div class="header-eyebrow">⛳ Season Standings</div>
+    <h1 class="header-title" id="season-title">Stan's Bar<span>Cup</span></h1>
+    <p class="header-meta">Last updated: <strong id="updated-at">loading...</strong></p>
+  </header>
+  <div class="tabs fade-up">
+    <button class="tab active" onclick="showTab('standings')">🏆 Standings</button>
+    <button class="tab" onclick="showTab('rounds')">📋 Round Results</button>
+    <button class="tab" onclick="showTab('stats')">📊 Stats</button>
+  </div>
+  <div id="tab-standings"></div>
+  <div id="tab-rounds" style="display:none"></div>
+  <div id="tab-stats" style="display:none"></div>
+</div>
+<footer class="site-footer">⛳ Stan's Bar Cup 2025 &nbsp;·&nbsp; Powered by Grint + GitHub Pages</footer>
+<script>
+let DATA = null;
+
+const SEASON_NAME = "2025 Golf Season";
+const MIN_ROUNDS  = 5;
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQzpowFse4mMG7BXMhw3nK4Z5L0RPYScUMdml-6ALNq_XhU9QLfOazyYLSoE8BR0Q/pub?gid=13083685&single=true&output=csv";
+
+function parseCSV(text) {
+  const rows = [];
+  const lines = text.split('\n');
+  for (const line of lines) {
+    if (!line.trim()) continue;
+    const row = [];
+    let field = '', inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') { inQuotes = !inQuotes; continue; }
+      if (ch === ',' && !inQuotes) { row.push(field.trim()); field = ''; continue; }
+      field += ch;
+    }
+    row.push(field.trim());
+    rows.push(row);
+  }
+  return rows;
+}
+
+function buildData(rows) {
+  let headerIdx = -1;
+  for (let i = 0; i < rows.length; i++) {
+    if (rows[i][0] && rows[i][0].toUpperCase().includes('DATE')) { headerIdx = i; break; }
+  }
+  if (headerIdx === -1) return null;
+  const dataRows = rows.slice(headerIdx + 1);
+  const rounds_by_date = {};
+  const scores_by_player = {};
+  for (const r of dataRows) {
+    const player = r[2] ? r[2].trim() : null;
+    const gross  = r[8] ? parseFloat(r[8]) : null;
+    if (!player || !gross || isNaN(gross) || (r[8] && r[8].startsWith('#'))) continue;
+    const dateRaw = r[0] ? r[0].trim() : '';
+    const dateObj = dateRaw ? new Date(dateRaw) : null;
+    const dateStr = dateObj && !isNaN(dateObj) ? dateObj.toISOString().split('T')[0] : dateRaw;
+    const dateDisplay = dateObj && !isNaN(dateObj) ? dateObj.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}) : dateRaw;
+    const course       = r[3] ? r[3].trim() : '';
+    const holes        = r[4] ? parseInt(r[4]) || 18 : 18;
+    const par          = r[5] ? parseFloat(r[5]) || 72 : 72;
+    const courseRating = r[6] ? parseFloat(r[6]) || null : null;
+    const slope        = r[7] ? parseInt(r[7])   || null : null;
+    const courseHcp    = r[9]  && !r[9].startsWith('#')  ? parseInt(r[9])   : null;
+    const net          = r[10] && !r[10].startsWith('#') ? parseFloat(r[10]) : null;
+    const points       = r[11] && !r[11].startsWith('#') ? parseInt(r[11])   : 0;
+    const place        = r[12] && !r[12].startsWith('#') ? parseInt(r[12])   : null;
+    const hcpIndex     = r[13] && !r[13].startsWith('#') ? parseFloat(r[13]) : null;
+    const entry = { date: dateStr, date_display: dateDisplay, player, course, holes, par,
+      course_rating: courseRating, slope, gross: Math.round(gross), course_hcp: courseHcp,
+      net: net != null ? Math.round(net*10)/10 : null, points: points||0, place, handicap_index: hcpIndex };
+    if (!rounds_by_date[dateStr]) rounds_by_date[dateStr] = { date: dateStr, date_display: dateDisplay, course, par: Math.round(par), course_rating: courseRating, slope, scores: [] };
+    rounds_by_date[dateStr].scores.push(entry);
+    if (!scores_by_player[player]) scores_by_player[player] = [];
+    scores_by_player[player].push(entry);
+  }
+  const standings = [];
+  for (const [name, rounds] of Object.entries(scores_by_player)) {
+    if (!rounds.length) continue;
+    const nets = rounds.map(r => r.net).filter(n => n != null);
+    const qualified = rounds.length >= MIN_ROUNDS;
+    const hcpIndex = rounds.find(r => r.handicap_index != null)?.handicap_index ?? null;
+    standings.push({ player: name, handicap_index: hcpIndex, rounds_played: rounds.length,
+      total_points: rounds.reduce((s,r) => s+(r.points||0), 0),
+      avg_net: nets.length ? Math.round(nets.reduce((a,b)=>a+b,0)/nets.length*10)/10 : null,
+      best_round: nets.length ? Math.min(...nets) : null, worst_round: nets.length ? Math.max(...nets) : null,
+      wins: rounds.filter(r => r.place===1).length, qualified });
+  }
+  standings.sort((a,b) => (a.qualified===b.qualified) ? b.total_points-a.total_points||(a.avg_net||99)-(b.avg_net||99) : b.qualified-a.qualified);
+  standings.forEach((s,i) => s.position = s.qualified ? i+1 : null);
+  const rounds_list = Object.values(rounds_by_date).sort((a,b) => b.date.localeCompare(a.date));
+  rounds_list.forEach(rd => rd.scores.sort((a,b) => (a.net??999)-(b.net??999)));
+  return { settings: { season_name: SEASON_NAME, min_rounds: MIN_ROUNDS,
+    updated_at: new Date().toLocaleDateString('en-US', {month:'long',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'}) },
+    standings, rounds: rounds_list };
+}
+
+async function loadData() {
+  document.getElementById('tab-standings').innerHTML = '<div class="state-msg"><span class="emoji">⛳</span><h3>Loading scores...</h3></div>';
+  try {
+    const r = await fetch(SHEET_URL);
+    if (!r.ok) throw new Error('Sheet not found');
+    const csv = await r.text();
+    const rows = parseCSV(csv);
+    DATA = buildData(rows);
+    if (!DATA || !DATA.standings.length) throw new Error('No data');
+    render();
+  } catch(e) {
+    document.getElementById('tab-standings').innerHTML = '<div class="state-msg"><span class="emoji">⛳</span><h3>No scores yet!</h3><p>Paste scores into the Google Sheet to see the leaderboard update here.</p></div>';
+  }
+}
+
+function render() {
+  document.getElementById('season-title').innerHTML = DATA.settings.season_name + '<span>Leaderboard</span>';
+  document.getElementById('updated-at').textContent = DATA.settings.updated_at;
+  renderStandings(); renderRounds(); renderStats();
+}
+
+function renderStandings() {
+  const { standings, settings } = DATA;
+  const qualified = standings.filter(p => p.qualified);
+  const notYet    = standings.filter(p => !p.qualified && p.rounds_played > 0);
+  const top3      = qualified.slice(0, 3);
+  let html = '';
+  if (top3.length) {
+    const medals = ['🥇','🥈','🥉'], classes = ['podium-1','podium-2','podium-3'], labels = ['1ST PLACE','2ND PLACE','3RD PLACE'];
+    html += '<div class="podium">';
+    top3.forEach((p,i) => { html += `<div class="podium-card ${classes[i]} fade-up"><span class="podium-medal">${medals[i]}</span><div class="podium-pos">${labels[i]}</div><div class="podium-name">${p.player}</div><span class="podium-pts">${p.total_points}</span><div class="podium-sub">pts &nbsp;·&nbsp; ${p.rounds_played} rounds</div></div>`; });
+    html += '</div>';
+  }
+  html += '<div class="card fade-up"><table class="lb-table"><thead><tr><th>POS</th><th>PLAYER</th><th>PTS</th><th>ROUNDS</th><th>AVG NET</th><th>BEST</th><th>WINS</th><th>STATUS</th></tr></thead><tbody>';
+  const allRows = [...qualified, ...notYet];
+  allRows.forEach(p => {
+    const posClass = p.position===1?'p1':p.position===2?'p2':p.position===3?'p3':'';
+    const wins = p.wins>0 ? `<span class="win-dot"></span>${p.wins}` : '–';
+    const badge = p.qualified ? '<span class="badge badge-q">Qualified</span>' : `<span class="badge badge-nm">${p.rounds_played}/${settings.min_rounds} min</span>`;
+    html += `<tr><td><span class="lb-pos ${posClass}">${p.position||'–'}</span></td><td><div class="lb-name">${p.player}</div>${p.handicap_index!=null?`<div class="lb-hcp">HCP ${p.handicap_index}</div>`:''}</td><td><span class="lb-pts">${p.total_points}</span></td><td>${p.rounds_played}</td><td>${p.avg_net??'–'}</td><td>${p.best_round??'–'}</td><td>${wins}</td><td>${badge}</td></tr>`;
+  });
+  if (!allRows.length) html += '<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--text-light)">No scores entered yet</td></tr>';
+  html += '</tbody></table></div>';
+  document.getElementById('tab-standings').innerHTML = html;
+}
+
+function renderRounds() {
+  const { rounds } = DATA;
+  if (!rounds.length) { document.getElementById('tab-rounds').innerHTML = '<div class="state-msg"><span class="emoji">📋</span><h3>No rounds yet</h3></div>'; return; }
+  let html = '';
+  rounds.forEach((rd, idx) => {
+    const id = `round-${idx}`;
+    html += `<div class="round-card fade-up"><div class="round-header" onclick="toggleRound('${id}')"><div><div class="round-date">${rd.date_display}</div><div class="round-course">${rd.course||''}${rd.par?' · Par '+rd.par:''}${rd.course_rating?' · ⭐ '+rd.course_rating:''}${rd.slope?' / '+rd.slope:''} &nbsp;·&nbsp; ${rd.scores.length} players</div></div><span class="round-toggle" id="${id}-icon">▼</span></div><div class="round-scores ${idx===0?'open':''}" id="${id}"><div class="score-col-hdr"><span>POS</span><span>PLAYER</span><span>GROSS</span><span>CRS HCP</span><span>NET</span><span>PTS</span></div>`;
+    rd.scores.forEach(s => {
+      html += `<div class="score-row"><span class="score-place ${s.place===1?'p1':''}">${s.place||'–'}</span><span class="score-name">${s.player}</span><span class="score-val">${s.gross??'–'}</span><span class="score-val" style="color:var(--text-light);font-size:12px">${s.course_hcp??'–'}</span><span class="score-net">${s.net??'–'}</span><span class="score-pts">+${s.points}</span></div>`;
+    });
+    html += `</div></div>`;
+    if (idx===0) setTimeout(()=>{ const ic=document.getElementById(`${id}-icon`); if(ic) ic.classList.add('open'); },0);
+  });
+  document.getElementById('tab-rounds').innerHTML = html;
+}
+
+function toggleRound(id) {
+  document.getElementById(id).classList.toggle('open');
+  document.getElementById(id+'-icon').classList.toggle('open');
+}
+
+function renderStats() {
+  const { standings, rounds, settings } = DATA;
+  const qualified = standings.filter(p => p.qualified);
+  const totalRoundEntries = rounds.reduce((s,r) => s+r.scores.length, 0);
+  const bestAvg   = qualified.length ? qualified.reduce((a,b) => a.avg_net<b.avg_net?a:b) : null;
+  const mostWins  = standings.reduce((a,b) => a.wins>b.wins?a:b, {wins:0});
+  const mostRounds= standings.reduce((a,b) => a.rounds_played>b.rounds_played?a:b, {rounds_played:0});
+  let html = `<div class="stats-grid fade-up">
+    <div class="stat-card"><div class="stat-label">Rounds Played</div><div class="stat-value">${rounds.length}</div><div class="stat-sub">${totalRoundEntries} scorecards total</div></div>
+    <div class="stat-card"><div class="stat-label">Players</div><div class="stat-value">${standings.length}</div><div class="stat-sub">${qualified.length} qualified</div></div>
+    ${bestAvg?`<div class="stat-card"><div class="stat-label">Best Avg Net</div><div class="stat-value">${bestAvg.avg_net}</div><div class="stat-sub">${bestAvg.player}</div></div>`:''}
+    ${mostWins.wins>0?`<div class="stat-card"><div class="stat-label">Most Wins</div><div class="stat-value">${mostWins.wins}</div><div class="stat-sub">${mostWins.player}</div></div>`:''}
+    ${mostRounds.rounds_played>0?`<div class="stat-card"><div class="stat-label">Most Rounds</div><div class="stat-value">${mostRounds.rounds_played}</div><div class="stat-sub">${mostRounds.player}</div></div>`:''}
+    <div class="stat-card"><div class="stat-label">Min to Qualify</div><div class="stat-value">${settings.min_rounds}</div><div class="stat-sub">rounds required</div></div>
+  </div>`;
+  if (standings.length) {
+    html += '<div class="card fade-up"><table class="lb-table"><thead><tr><th>PLAYER</th><th>ROUNDS</th><th>AVG NET</th><th>BEST</th><th>WORST</th><th>WINS</th><th>TOTAL PTS</th></tr></thead><tbody>';
+    standings.forEach(p => { html += `<tr><td style="text-align:left"><span class="lb-name">${p.player}</span>${p.handicap_index!=null?`<div class="lb-hcp">HCP ${p.handicap_index}</div>`:''}</td><td>${p.rounds_played}</td><td>${p.avg_net??'–'}</td><td>${p.best_round??'–'}</td><td>${p.worst_round??'–'}</td><td>${p.wins||'–'}</td><td><span class="lb-pts">${p.total_points}</span></td></tr>`; });
+    html += '</tbody></table></div>';
+  }
+  document.getElementById('tab-stats').innerHTML = html;
+}
+
+function showTab(name) {
+  ['standings','rounds','stats'].forEach(t => { document.getElementById('tab-'+t).style.display = t===name?'':'none'; });
+  document.querySelectorAll('.tab').forEach((btn,i) => { btn.classList.toggle('active', ['standings','rounds','stats'][i]===name); });
+}
+
+loadData();
+</script>
+</body>
+</html>
