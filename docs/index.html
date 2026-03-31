@@ -22,13 +22,10 @@
   .header-title span{color:var(--gold);display:block;}
   .header-meta{margin-top:18px;font-size:13px;color:var(--green-light);font-weight:300;letter-spacing:0.5px;}
   .header-meta strong{color:var(--gold-light);font-weight:500;}
-
-  /* ── Join button ── */
   .join-btn-wrap{text-align:center;margin:20px 0 0;}
-  .join-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(160deg,#3d2800,#1a1000);border:1px solid var(--gold);color:var(--gold-light);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;padding:12px 28px;border-radius:100px;cursor:pointer;text-decoration:none;transition:all 0.2s;letter-spacing:0.5px;}
+  .join-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(160deg,#3d2800,#1a1000);border:1px solid var(--gold);color:var(--gold-light);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;padding:12px 28px;border-radius:100px;cursor:pointer;transition:all 0.2s;letter-spacing:0.5px;outline:none;}
   .join-btn:hover{background:linear-gradient(160deg,#5a3d00,#2a1800);transform:translateY(-2px);}
   .join-btn-sub{font-size:11px;color:var(--text-light);margin-top:8px;font-family:'DM Mono',monospace;}
-
   .tabs{display:flex;justify-content:center;gap:6px;margin:28px 0 28px;flex-wrap:wrap;}
   .tab{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.5px;padding:10px 24px;border-radius:100px;cursor:pointer;transition:all 0.2s;outline:none;}
   .tab:hover{background:rgba(255,255,255,0.12);}
@@ -107,11 +104,42 @@
   .state-msg .emoji{font-size:48px;display:block;margin-bottom:16px;}
   .state-msg h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--cream);margin-bottom:8px;}
   .site-footer{text-align:center;padding:32px 20px;font-size:11px;color:rgba(255,255,255,0.2);font-family:'DM Mono',monospace;letter-spacing:1px;}
+
+  /* ── MODAL ── */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.25s;}
+  .modal-overlay.open{opacity:1;pointer-events:all;}
+  .modal{background:var(--green-dark);border:1px solid rgba(201,168,76,0.4);border-radius:20px;padding:36px 32px;width:100%;max-width:440px;position:relative;transform:translateY(24px);transition:transform 0.25s;}
+  .modal-overlay.open .modal{transform:translateY(0);}
+  .modal-close{position:absolute;top:16px;right:18px;background:none;border:none;color:var(--text-light);font-size:22px;cursor:pointer;line-height:1;padding:4px;}
+  .modal-close:hover{color:var(--cream);}
+  .modal-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--green-light);margin-bottom:10px;}
+  .modal-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:var(--cream);margin-bottom:4px;}
+  .modal-title span{color:var(--gold);}
+  .modal-sub{font-size:12px;color:var(--text-light);margin-bottom:28px;}
+  .field{margin-bottom:18px;}
+  .field label{display:block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--green-light);margin-bottom:8px;}
+  .field input{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:13px 16px;color:var(--cream);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;}
+  .field input:focus{border-color:var(--gold);}
+  .field input::placeholder{color:rgba(255,255,255,0.25);}
+  .submit-btn{width:100%;background:linear-gradient(160deg,#3d2800,#1a1000);border:1px solid var(--gold);color:var(--gold-light);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;padding:14px;border-radius:12px;cursor:pointer;transition:all 0.2s;margin-top:4px;letter-spacing:0.5px;}
+  .submit-btn:hover{background:linear-gradient(160deg,#5a3d00,#2a1800);}
+  .submit-btn:disabled{opacity:0.5;cursor:not-allowed;}
+  .form-msg{text-align:center;font-size:13px;margin-top:14px;min-height:20px;}
+  .form-msg.success{color:var(--green-light);}
+  .form-msg.error{color:#ff8a8a;}
+
+  /* ── success screen ── */
+  .success-screen{text-align:center;padding:12px 0;}
+  .success-icon{font-size:52px;display:block;margin-bottom:16px;}
+  .success-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:var(--cream);margin-bottom:8px;}
+  .success-sub{font-size:13px;color:var(--text-light);line-height:1.6;}
+
   @media(max-width:640px){
     .podium{grid-template-columns:1fr;max-width:280px;margin-left:auto;margin-right:auto;}
     .lb-table th:nth-child(n+5),.lb-table td:nth-child(n+5){display:none;}
     .score-row,.score-col-hdr{grid-template-columns:32px 1fr 52px 52px;}
     .score-row>*:nth-child(n+5),.score-col-hdr>*:nth-child(n+5){display:none;}
+    .modal{padding:28px 20px;}
   }
   @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
   .fade-up{animation:fadeUp 0.5s ease both;}
@@ -122,13 +150,47 @@
 </style>
 </head>
 <body>
+
+<!-- ── SIGNUP MODAL ── -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-form-content">
+      <div class="modal-eyebrow">⛳ 2026 Season</div>
+      <div class="modal-title">Join the <span>Stan's Bar Cup</span></div>
+      <div class="modal-sub">April 15 – October 31 &nbsp;·&nbsp; Free to enter</div>
+      <div class="field">
+        <label>Full Name</label>
+        <input type="text" id="f-name" placeholder="Your name" autocomplete="name">
+      </div>
+      <div class="field">
+        <label>Grint Username</label>
+        <input type="text" id="f-grint" placeholder="Your Grint ID">
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="f-email" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <button class="submit-btn" id="submit-btn" onclick="submitSignup()">⛳ &nbsp;Join the Cup</button>
+      <div class="form-msg" id="form-msg"></div>
+    </div>
+    <div id="modal-success" style="display:none">
+      <div class="success-screen">
+        <span class="success-icon">🏆</span>
+        <div class="success-title">You're in!</div>
+        <div class="success-sub">Welcome to the Stan's Bar Cup 2026.<br>Post your rounds to Grint and you'll appear on the leaderboard.<br><br>See you on the course. ⛳</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="page-wrap">
   <header class="site-header fade-up">
     <div class="header-eyebrow">⛳ Season Standings</div>
     <h1 class="header-title" id="season-title">Stan's Bar<span>Cup</span></h1>
     <p class="header-meta">Last updated: <strong id="updated-at">loading...</strong></p>
     <div class="join-btn-wrap">
-      <a class="join-btn" href="https://forms.gle/qTd2KfUxFpaXhho79" target="_blank">⛳ &nbsp;Join the Cup</a>
+      <button class="join-btn" onclick="openModal()">⛳ &nbsp;Join the Cup</button>
       <div class="join-btn-sub">Sign up to compete · Free to enter</div>
     </div>
   </header>
@@ -144,15 +206,59 @@
   <div id="tab-rounds" style="display:none"></div>
   <div id="tab-rules" style="display:none"></div>
 </div>
+
 <footer class="site-footer">⛳ Stan's Bar Cup 2026 &nbsp;·&nbsp; Powered by Grint + GitHub Pages</footer>
+
 <script>
 let DATA = null;
-const SEASON_NAME = "2026 Stan's Bar Cup";
-const SCRIPT_URL  = "https://script.google.com/macros/s/AKfycbyqvcD5IveceZHFHYsy5_fQe_GO3IqOFYCURVPSQhlNwddyd3TauSJkNE--JdVml1QQvw/exec";
+const SEASON_NAME  = "2026 Golf Season";
+const SCRIPT_URL   = "https://script.google.com/macros/s/AKfycbyqvcD5IveceZHFHYsy5_fQe_GO3IqOFYCURVPSQhlNwddyd3TauSJkNE--JdVml1QQvw/exec";
 const POINTS_SCALE = [20,17,15,13,11,9,7,5,3,2,1];
 const SEASON_START = new Date("2026-04-15");
 const SEASON_END   = new Date("2026-10-31");
 
+// ── Modal ──────────────────────────────────────────────────────────────────
+function openModal(){
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  setTimeout(()=>document.getElementById('f-name').focus(),300);
+}
+function closeModal(){
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function handleOverlayClick(e){if(e.target===document.getElementById('modal-overlay'))closeModal();}
+
+async function submitSignup(){
+  const name   = document.getElementById('f-name').value.trim();
+  const grint  = document.getElementById('f-grint').value.trim();
+  const email  = document.getElementById('f-email').value.trim();
+  const msg    = document.getElementById('form-msg');
+  const btn    = document.getElementById('submit-btn');
+
+  if(!name){msg.textContent='Please enter your name.';msg.className='form-msg error';return;}
+  if(!grint){msg.textContent='Please enter your Grint username.';msg.className='form-msg error';return;}
+  if(!email||!email.includes('@')){msg.textContent='Please enter a valid email.';msg.className='form-msg error';return;}
+
+  btn.disabled=true;
+  btn.textContent='Submitting...';
+  msg.textContent='';
+
+  try{
+    const url=`${SCRIPT_URL}?action=signup&name=${encodeURIComponent(name)}&grint_id=${encodeURIComponent(grint)}&email=${encodeURIComponent(email)}`;
+    await fetch(url,{method:'GET',mode:'no-cors'});
+    document.getElementById('modal-form-content').style.display='none';
+    document.getElementById('modal-success').style.display='block';
+    setTimeout(()=>{ loadData(); },2000);
+  }catch(e){
+    msg.textContent='Something went wrong. Please try again.';
+    msg.className='form-msg error';
+    btn.disabled=false;
+    btn.textContent='⛳  Join the Cup';
+  }
+}
+
+// ── Data helpers ───────────────────────────────────────────────────────────
 function monthKey(d){return`${new Date(d).getFullYear()}-${String(new Date(d).getMonth()+1).padStart(2,'0')}`;}
 function monthLabel(k){const[y,m]=k.split('-');return new Date(y,m-1,1).toLocaleDateString('en-US',{month:'long',year:'numeric'});}
 
@@ -171,14 +277,11 @@ function parsePlayers(rows){
 }
 
 function parseSignups(rows,players){
-  // Form_Responses columns: A=Timestamp, B=Name, C=Grint ID, D=Email
   if(!rows||rows.length<2)return;
   for(const r of rows.slice(1)){
     const name=r[1]?String(r[1]).trim():null;
     if(!name)continue;
-    if(!players[name]){
-      players[name]={name,handicap_index:null,grint_username:r[2]?String(r[2]).trim():null,email:r[3]?String(r[3]).trim():null,source:'signup'};
-    }
+    if(!players[name])players[name]={name,handicap_index:null,grint_username:r[2]?String(r[2]).trim():null,email:r[3]?String(r[3]).trim():null,source:'signup'};
   }
 }
 
@@ -242,7 +345,6 @@ function buildData(payload){
   parseSignups(payload.signups||[],players);
   const{allEntries,rounds_by_date}=parseScores(payload.scores||[],players);
   const monthlyResults=calcMonthly(allEntries);
-
   const seasonTotals={};
   for(const[mk,ps]of Object.entries(monthlyResults)){
     for(const p of ps){
@@ -256,27 +358,22 @@ function buildData(payload){
   for(const[name,info]of Object.entries(players)){
     if(!seasonTotals[name])seasonTotals[name]={player:name,total_points:0,months_played:0,rounds_played:0,monthly:{},handicap_index:info.handicap_index,source:info.source||'roster'};
   }
-
   const withPts=Object.values(seasonTotals).filter(p=>p.total_points>0).sort((a,b)=>b.total_points-a.total_points);
   const noPts=Object.values(seasonTotals).filter(p=>p.total_points===0).sort((a,b)=>a.player.localeCompare(b.player));
   const standings=[...withPts,...noPts];
   withPts.forEach((s,i)=>s.position=i+1);
   noPts.forEach(s=>s.position=null);
-
   const rounds_list=Object.values(rounds_by_date).sort((a,b)=>b.date.localeCompare(a.date));
   rounds_list.forEach(rd=>rd.scores.sort((a,b)=>(a.net??999)-(b.net??999)));
-  const activeMonths=Object.keys(monthlyResults).sort();
-
   return{
     settings:{season_name:SEASON_NAME,updated_at:new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'})},
-    standings,monthlyResults,activeMonths,rounds:rounds_list,
-    totalRegistered:Object.keys(players).length,
-    totalSignups:Object.values(players).filter(p=>p.source==='signup').length
+    standings,monthlyResults,activeMonths:Object.keys(monthlyResults).sort(),
+    rounds:rounds_list,totalRegistered:Object.keys(players).length
   };
 }
 
 async function loadData(){
-  document.getElementById('tab-standings').innerHTML='<div class="state-msg"><span class="emoji">⛳</span><h3>Loading scores...</h3></div>';
+  if(!DATA)document.getElementById('tab-standings').innerHTML='<div class="state-msg"><span class="emoji">⛳</span><h3>Loading scores...</h3></div>';
   try{
     const r=await fetch(SCRIPT_URL);
     if(!r.ok)throw new Error('error');
@@ -284,7 +381,7 @@ async function loadData(){
     DATA=buildData(payload);
     render();
   }catch(e){
-    document.getElementById('tab-standings').innerHTML='<div class="state-msg"><span class="emoji">⛳</span><h3>No scores yet!</h3><p>Add players to the Players tab and scores to the Scores tab in the Google Sheet.</p></div>';
+    document.getElementById('tab-standings').innerHTML='<div class="state-msg"><span class="emoji">⛳</span><h3>No scores yet!</h3><p>Sign up above and post your rounds to Grint to appear here.</p></div>';
   }
 }
 
@@ -299,57 +396,28 @@ function renderStandings(){
   const withPoints=standings.filter(p=>p.total_points>0);
   const top3=withPoints.slice(0,3);
   let html='';
-
   html+=`<div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
-    <div class="stat-card" style="flex:1;min-width:130px;padding:16px;">
-      <div class="stat-label">Registered</div>
-      <div class="stat-value" style="font-size:28px">${totalRegistered}</div>
-      <div class="stat-sub">players signed up</div>
-    </div>
-    <div class="stat-card" style="flex:1;min-width:130px;padding:16px;">
-      <div class="stat-label">Active</div>
-      <div class="stat-value" style="font-size:28px">${withPoints.length}</div>
-      <div class="stat-sub">have played</div>
-    </div>
-    <div class="stat-card" style="flex:1;min-width:130px;padding:16px;">
-      <div class="stat-label">Awaiting Tee</div>
-      <div class="stat-value" style="font-size:28px">${standings.filter(p=>p.rounds_played===0).length}</div>
-      <div class="stat-sub">yet to play</div>
-    </div>
+    <div class="stat-card" style="flex:1;min-width:130px;padding:16px;"><div class="stat-label">Registered</div><div class="stat-value" style="font-size:28px">${totalRegistered}</div><div class="stat-sub">players signed up</div></div>
+    <div class="stat-card" style="flex:1;min-width:130px;padding:16px;"><div class="stat-label">Active</div><div class="stat-value" style="font-size:28px">${withPoints.length}</div><div class="stat-sub">have played</div></div>
+    <div class="stat-card" style="flex:1;min-width:130px;padding:16px;"><div class="stat-label">Awaiting Tee</div><div class="stat-value" style="font-size:28px">${standings.filter(p=>p.rounds_played===0).length}</div><div class="stat-sub">yet to play</div></div>
   </div>`;
-
   if(top3.length){
     const medals=['🥇','🥈','🥉'],classes=['podium-1','podium-2','podium-3'],labels=['1ST PLACE','2ND PLACE','3RD PLACE'];
     html+='<div class="podium">';
     top3.forEach((p,i)=>{html+=`<div class="podium-card ${classes[i]} fade-up"><span class="podium-medal">${medals[i]}</span><div class="podium-pos">${labels[i]}</div><div class="podium-name">${p.player}</div><span class="podium-pts">${p.total_points}</span><div class="podium-sub">season pts &nbsp;·&nbsp; ${p.rounds_played} rounds</div></div>`;});
     html+='</div>';
   }
-
-  html+='<div class="card fade-up"><table class="lb-table"><thead><tr>';
-  html+='<th>POS</th><th>PLAYER</th><th>HCP</th><th>SEASON PTS</th><th>ROUNDS</th><th>STATUS</th>';
+  html+='<div class="card fade-up"><table class="lb-table"><thead><tr><th>POS</th><th>PLAYER</th><th>HCP</th><th>SEASON PTS</th><th>ROUNDS</th><th>STATUS</th>';
   activeMonths.forEach(mk=>{html+=`<th>${monthLabel(mk).split(' ')[0]}</th>`;});
   html+='</tr></thead><tbody>';
-
   standings.forEach(p=>{
     const posClass=p.position===1?'p1':p.position===2?'p2':p.position===3?'p3':'';
-    let badge='';
-    if(p.rounds_played===0)badge='<span class="badge badge-reg">Registered</span>';
-    else if(p.position===1)badge='<span class="badge badge-lead">🏆 Leading</span>';
-    else badge='<span class="badge badge-active">Active</span>';
-
-    html+=`<tr><td><span class="lb-pos ${posClass}">${p.position||'–'}</span></td>`;
-    html+=`<td><div class="lb-name">${p.player}</div>${p.handicap_index!=null?`<div class="lb-hcp">HCP ${p.handicap_index}</div>`:''}</td>`;
-    html+=`<td>${p.handicap_index!=null?p.handicap_index:'–'}</td>`;
-    html+=`<td><span class="lb-pts">${p.total_points||'–'}</span></td>`;
-    html+=`<td>${p.rounds_played}</td><td>${badge}</td>`;
-    activeMonths.forEach(mk=>{
-      const m=p.monthly[mk];
-      if(m){const cls=m.position===1?'winner':'';html+=`<td><span class="month-pts ${cls}">${m.points}<br><small style="color:var(--text-light);font-size:10px">#${m.position}·${m.avg_net}</small></span></td>`;}
-      else html+=`<td><span class="month-pts empty">–</span></td>`;
-    });
+    let badge=p.rounds_played===0?'<span class="badge badge-reg">Registered</span>':p.position===1?'<span class="badge badge-lead">🏆 Leading</span>':'<span class="badge badge-active">Active</span>';
+    html+=`<tr><td><span class="lb-pos ${posClass}">${p.position||'–'}</span></td><td><div class="lb-name">${p.player}</div>${p.handicap_index!=null?`<div class="lb-hcp">HCP ${p.handicap_index}</div>`:''}</td><td>${p.handicap_index!=null?p.handicap_index:'–'}</td><td><span class="lb-pts">${p.total_points||'–'}</span></td><td>${p.rounds_played}</td><td>${badge}</td>`;
+    activeMonths.forEach(mk=>{const m=p.monthly[mk];html+=m?`<td><span class="month-pts ${m.position===1?'winner':''}">${m.points}<br><small style="color:var(--text-light);font-size:10px">#${m.position}·${m.avg_net}</small></span></td>`:`<td><span class="month-pts empty">–</span></td>`;});
     html+='</tr>';
   });
-  if(!standings.length)html+='<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--text-light)">No players yet</td></tr>';
+  if(!standings.length)html+='<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--text-light)">No players yet — be the first to join!</td></tr>';
   html+='</tbody></table></div>';
   document.getElementById('tab-standings').innerHTML=html;
 }
@@ -359,19 +427,13 @@ function renderMonthly(){
   if(!activeMonths.length){document.getElementById('tab-monthly').innerHTML='<div class="state-msg"><span class="emoji">📅</span><h3>No monthly data yet</h3><p>Season starts April 15, 2026</p></div>';return;}
   let html='';
   [...activeMonths].reverse().forEach((mk,idx)=>{
-    const ps=monthlyResults[mk];
-    const id=`month-${mk}`;
-    const w=ps[0];
+    const ps=monthlyResults[mk],id=`month-${mk}`,w=ps[0];
     html+=`<div class="month-card fade-up"><div class="month-header" onclick="toggleMonth('${id}')"><div><div class="month-title">${monthLabel(mk)}</div><div class="month-sub">${ps.length} players &nbsp;·&nbsp; ${w?'🏆 '+w.player+' ('+w.avg_net+' avg net)':''}</div></div><span class="month-toggle ${idx===0?'open':''}" id="${id}-icon">▼</span></div><div class="month-body ${idx===0?'open':''}" id="${id}"><table class="lb-table"><thead><tr><th>POS</th><th>PLAYER</th><th>MONTHLY PTS</th><th>ROUNDS PLAYED</th><th>ROUNDS COUNTED</th><th>AVG NET (TOP 5)</th></tr></thead><tbody>`;
-    ps.forEach(p=>{
-      const pc=p.position===1?'p1':p.position===2?'p2':p.position===3?'p3':'';
-      html+=`<tr><td><span class="lb-pos ${pc}">${p.position}</span></td><td><div class="lb-name">${p.player}</div></td><td><span class="lb-pts">${p.points}</span></td><td>${p.rounds_played}</td><td>${p.counted_rounds}</td><td>${p.avg_net}</td></tr>`;
-    });
+    ps.forEach(p=>{const pc=p.position===1?'p1':p.position===2?'p2':p.position===3?'p3':'';html+=`<tr><td><span class="lb-pos ${pc}">${p.position}</span></td><td><div class="lb-name">${p.player}</div></td><td><span class="lb-pts">${p.points}</span></td><td>${p.rounds_played}</td><td>${p.counted_rounds}</td><td>${p.avg_net}</td></tr>`;});
     html+='</tbody></table></div></div>';
   });
   document.getElementById('tab-monthly').innerHTML=html;
 }
-
 function toggleMonth(id){document.getElementById(id).classList.toggle('open');document.getElementById(id+'-icon').classList.toggle('open');}
 
 function renderRounds(){
@@ -387,50 +449,23 @@ function renderRounds(){
   });
   document.getElementById('tab-rounds').innerHTML=html;
 }
-
 function toggleRound(id){document.getElementById(id).classList.toggle('open');document.getElementById(id+'-icon').classList.toggle('open');}
 
 function renderRules(){
   const el=document.getElementById('tab-rules');
   if(el.innerHTML)return;
-  el.innerHTML=`
-  <div class="card fade-up" style="padding:32px 36px;line-height:1.8;">
+  el.innerHTML=`<div class="card fade-up" style="padding:32px 36px;line-height:1.8;">
     <div style="text-align:center;margin-bottom:32px;">
       <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--green-light);margin-bottom:10px;">Official Competition Rules</div>
       <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--cream);">Stan's Bar Cup</div>
       <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--gold);margin-top:6px;">2026 Season &nbsp;·&nbsp; April 15 – October 31</div>
     </div>
-    <div style="margin-bottom:28px;">
-      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">🏆 The Competition</div>
-      <p style="color:var(--cream);font-size:14px;">The Stan's Bar Cup is a season-long, FedEx Cup-style points race running <strong>April 15 – October 31, 2026</strong>. Points are awarded monthly. The player with the most cumulative season points wins the Cup.</p>
-    </div>
-    <div style="margin-bottom:28px;">
-      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">📅 How Monthly Scoring Works</div>
-      <p style="color:var(--cream);font-size:14px;">Each month, every player's <strong>5 best net scores</strong> are counted. Players are ranked by average net score across those 5 rounds — lower is better. Monthly points are awarded based on that ranking. Play more than 5 rounds? Only your best 5 count. Play fewer than 5? Your average is based on however many you played.</p>
-    </div>
-    <div style="margin-bottom:28px;">
-      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">⛳ How Net Score Works</div>
-      <p style="color:var(--cream);font-size:14px;">Net scores use the official <strong>USGA Course Handicap formula</strong>:</p>
-      <div style="background:rgba(0,0,0,0.3);border-left:3px solid var(--gold);padding:14px 20px;border-radius:8px;margin:14px 0;font-family:'DM Mono',monospace;font-size:13px;color:var(--gold-light);">
-        Course HCP = ROUND(HCP Index × (Slope ÷ 113) + (Course Rating − Par), 0)<br>
-        Net Score = Gross Score − Course HCP
-      </div>
-      <p style="color:var(--cream);font-size:14px;">Every course is equalized — a tough track gives you more strokes, an easy one fewer.</p>
-    </div>
-    <div style="margin-bottom:28px;">
-      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">🎯 Monthly Points Scale</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;">
-        ${[['🥇 1st','20'],['🥈 2nd','17'],['🥉 3rd','15'],['4th','13'],['5th','11'],['6th','9'],['7th','7'],['8th','5'],['9th','3'],['10th','2'],['11th+','1']].map(([p,pts])=>`<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:12px;color:var(--cream);font-weight:600;">${p}</div><div style="font-family:'DM Mono',monospace;color:var(--gold-light);font-size:15px;margin-top:4px;">${pts} pts</div></div>`).join('')}
-      </div>
-    </div>
-    <div style="margin-bottom:28px;">
-      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">📱 How to Sign Up & Post Scores</div>
-      <p style="color:var(--cream);font-size:14px;">Click <strong>"Join the Cup"</strong> at the top of the page to register. Post all rounds to <strong>Grint</strong> as normal — scores are collected monthly. Keep your Grint handicap index current.</p>
-    </div>
-    <div style="margin-bottom:8px;">
-      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">🍺 The Prize</div>
-      <p style="color:var(--cream);font-size:14px;">The season champion receives the <strong>Stan's Bar Cup</strong> — a custom engraved trophy that lives at Stan's Bar. The winner gets it filled with beer on the house at the end-of-season celebration. Proudly sponsored by Stan's Bar.</p>
-    </div>
+    <div style="margin-bottom:28px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">🏆 The Competition</div><p style="color:var(--cream);font-size:14px;">The Stan's Bar Cup is a season-long, FedEx Cup-style points race running <strong>April 15 – October 31, 2026</strong>. Points are awarded monthly. The player with the most cumulative season points wins the Cup.</p></div>
+    <div style="margin-bottom:28px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">📅 How Monthly Scoring Works</div><p style="color:var(--cream);font-size:14px;">Each month, every player's <strong>5 best net scores</strong> are counted. Players are ranked by average net score across those 5 rounds — lower is better. Monthly points are awarded based on that ranking. Play more than 5 rounds? Only your best 5 count. Play fewer? Your average is based on however many you played.</p></div>
+    <div style="margin-bottom:28px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">⛳ How Net Score Works</div><p style="color:var(--cream);font-size:14px;">Net scores use the official <strong>USGA Course Handicap formula</strong>:</p><div style="background:rgba(0,0,0,0.3);border-left:3px solid var(--gold);padding:14px 20px;border-radius:8px;margin:14px 0;font-family:'DM Mono',monospace;font-size:13px;color:var(--gold-light);">Course HCP = ROUND(HCP Index × (Slope ÷ 113) + (Course Rating − Par), 0)<br>Net Score = Gross Score − Course HCP</div><p style="color:var(--cream);font-size:14px;">Every course is equalized — a tough track gives you more strokes, an easy one fewer.</p></div>
+    <div style="margin-bottom:28px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">🎯 Monthly Points Scale</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;">${[['🥇 1st','20'],['🥈 2nd','17'],['🥉 3rd','15'],['4th','13'],['5th','11'],['6th','9'],['7th','7'],['8th','5'],['9th','3'],['10th','2'],['11th+','1']].map(([p,pts])=>`<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:12px;color:var(--cream);font-weight:600;">${p}</div><div style="font-family:'DM Mono',monospace;color:var(--gold-light);font-size:15px;margin-top:4px;">${pts} pts</div></div>`).join('')}</div></div>
+    <div style="margin-bottom:28px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">📱 How to Sign Up & Post Scores</div><p style="color:var(--cream);font-size:14px;">Click <strong>"Join the Cup"</strong> at the top of the page to register. Post all rounds to <strong>Grint</strong> as normal — scores are collected monthly. Keep your Grint handicap index current.</p></div>
+    <div style="margin-bottom:8px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">🍺 The Prize</div><p style="color:var(--cream);font-size:14px;">The season champion receives the <strong>Stan's Bar Cup</strong> — a custom engraved trophy that lives at Stan's Bar. The winner gets it filled with beer on the house at the end-of-season celebration. Proudly sponsored by Stan's Bar.</p></div>
   </div>`;
 }
 
