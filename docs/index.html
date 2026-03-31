@@ -16,13 +16,20 @@
   body{background:var(--green-deep);color:var(--cream);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
   body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% -10%,rgba(45,134,83,0.18) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 90% 110%,rgba(13,43,26,0.8) 0%,transparent 60%),repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,255,255,0.012) 40px,rgba(255,255,255,0.012) 41px);pointer-events:none;z-index:0;}
   .page-wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 60px;}
-  .site-header{text-align:center;padding:56px 20px 40px;}
+  .site-header{text-align:center;padding:56px 20px 16px;}
   .header-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--green-light);margin-bottom:14px;opacity:0.9;}
   .header-title{font-family:'Playfair Display',serif;font-size:clamp(36px,7vw,72px);font-weight:900;line-height:1.0;color:var(--cream);letter-spacing:-1px;text-shadow:0 2px 24px rgba(0,0,0,0.4);}
   .header-title span{color:var(--gold);display:block;}
   .header-meta{margin-top:18px;font-size:13px;color:var(--green-light);font-weight:300;letter-spacing:0.5px;}
   .header-meta strong{color:var(--gold-light);font-weight:500;}
-  .tabs{display:flex;justify-content:center;gap:6px;margin:32px 0 28px;flex-wrap:wrap;}
+
+  /* ── Join button ── */
+  .join-btn-wrap{text-align:center;margin:20px 0 0;}
+  .join-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(160deg,#3d2800,#1a1000);border:1px solid var(--gold);color:var(--gold-light);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;padding:12px 28px;border-radius:100px;cursor:pointer;text-decoration:none;transition:all 0.2s;letter-spacing:0.5px;}
+  .join-btn:hover{background:linear-gradient(160deg,#5a3d00,#2a1800);transform:translateY(-2px);}
+  .join-btn-sub{font-size:11px;color:var(--text-light);margin-top:8px;font-family:'DM Mono',monospace;}
+
+  .tabs{display:flex;justify-content:center;gap:6px;margin:28px 0 28px;flex-wrap:wrap;}
   .tab{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.5px;padding:10px 24px;border-radius:100px;cursor:pointer;transition:all 0.2s;outline:none;}
   .tab:hover{background:rgba(255,255,255,0.12);}
   .tab.active{background:var(--gold);border-color:var(--gold);color:var(--green-deep);font-weight:600;}
@@ -92,7 +99,6 @@
   .score-col-hdr{display:grid;grid-template-columns:36px 1fr 58px 58px 58px 58px;padding:8px 20px;background:rgba(0,0,0,0.2);border-top:1px solid rgba(255,255,255,0.06);}
   .score-col-hdr span{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--green-light);text-align:right;}
   .score-col-hdr span:nth-child(2){text-align:left;}
-  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;}
   .stat-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:12px;padding:20px;text-align:center;}
   .stat-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);font-family:'DM Mono',monospace;margin-bottom:10px;}
   .stat-value{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--gold);}
@@ -121,7 +127,12 @@
     <div class="header-eyebrow">⛳ Season Standings</div>
     <h1 class="header-title" id="season-title">Stan's Bar<span>Cup</span></h1>
     <p class="header-meta">Last updated: <strong id="updated-at">loading...</strong></p>
+    <div class="join-btn-wrap">
+      <a class="join-btn" href="https://forms.gle/qTd2KfUxFpaXhho79" target="_blank">⛳ &nbsp;Join the Cup</a>
+      <div class="join-btn-sub">Sign up to compete · Free to enter</div>
+    </div>
   </header>
+
   <div class="tabs fade-up">
     <button class="tab active" onclick="showTab('standings')">🏆 Season</button>
     <button class="tab" onclick="showTab('monthly')">📅 Monthly</button>
@@ -142,30 +153,41 @@ const POINTS_SCALE = [20,17,15,13,11,9,7,5,3,2,1];
 const SEASON_START = new Date("2026-04-15");
 const SEASON_END   = new Date("2026-10-31");
 
-function monthKey(dateStr){const d=new Date(dateStr);return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;}
-function monthLabel(key){const[y,m]=key.split('-');return new Date(y,m-1,1).toLocaleDateString('en-US',{month:'long',year:'numeric'});}
+function monthKey(d){return`${new Date(d).getFullYear()}-${String(new Date(d).getMonth()+1).padStart(2,'0')}`;}
+function monthLabel(k){const[y,m]=k.split('-');return new Date(y,m-1,1).toLocaleDateString('en-US',{month:'long',year:'numeric'});}
 
 function parsePlayers(rows){
-  const players={};
-  let headerIdx=-1;
-  for(let i=0;i<rows.length;i++){if(rows[i][1]&&String(rows[i][1]).toUpperCase().includes('PLAYER')){headerIdx=i;break;}}
-  if(headerIdx===-1)return players;
-  for(const r of rows.slice(headerIdx+1)){
+  const p={};
+  let hi=-1;
+  for(let i=0;i<rows.length;i++){if(rows[i][1]&&String(rows[i][1]).toUpperCase().includes('PLAYER')){hi=i;break;}}
+  if(hi===-1)return p;
+  for(const r of rows.slice(hi+1)){
+    const n=r[1]?String(r[1]).trim():null;
+    if(!n)continue;
+    const hcp=r[3]!=null&&String(r[3]).charAt(0)!=='#'?parseFloat(r[3]):null;
+    p[n]={name:n,handicap_index:hcp,grint_username:r[2]?String(r[2]).trim():null,source:'roster'};
+  }
+  return p;
+}
+
+function parseSignups(rows,players){
+  // Form_Responses columns: A=Timestamp, B=Name, C=Grint ID, D=Email
+  if(!rows||rows.length<2)return;
+  for(const r of rows.slice(1)){
     const name=r[1]?String(r[1]).trim():null;
     if(!name)continue;
-    const hcp=r[3]!=null&&String(r[3]).charAt(0)!=='#'?parseFloat(r[3]):null;
-    players[name]={name,handicap_index:hcp,grint_username:r[2]?String(r[2]).trim():null};
+    if(!players[name]){
+      players[name]={name,handicap_index:null,grint_username:r[2]?String(r[2]).trim():null,email:r[3]?String(r[3]).trim():null,source:'signup'};
+    }
   }
-  return players;
 }
 
 function parseScores(rows,players){
-  let headerIdx=-1;
-  for(let i=0;i<rows.length;i++){if(rows[i][0]&&String(rows[i][0]).toUpperCase().includes('DATE')){headerIdx=i;break;}}
-  const allEntries=[];
-  const rounds_by_date={};
-  if(headerIdx===-1)return{allEntries,rounds_by_date};
-  for(const r of rows.slice(headerIdx+1)){
+  let hi=-1;
+  for(let i=0;i<rows.length;i++){if(rows[i][0]&&String(rows[i][0]).toUpperCase().includes('DATE')){hi=i;break;}}
+  const allEntries=[],rounds_by_date={};
+  if(hi===-1)return{allEntries,rounds_by_date};
+  for(const r of rows.slice(hi+1)){
     const player=r[2]?String(r[2]).trim():null;
     const gross=r[8]!=null?parseFloat(r[8]):null;
     if(!player||!gross||isNaN(gross))continue;
@@ -180,7 +202,6 @@ function parseScores(rows,players){
     const courseHcp=r[9]!=null&&String(r[9]).charAt(0)!=='#'?parseInt(r[9]):null;
     const net=r[10]!=null&&String(r[10]).charAt(0)!=='#'?parseFloat(r[10]):null;
     const hcpIndex=r[13]!=null&&String(r[13]).charAt(0)!=='#'?parseFloat(r[13]):null;
-    // Update player hcp if found in scores
     if(player&&players[player]&&hcpIndex!=null)players[player].handicap_index=hcpIndex;
     const entry={date:dateStr,date_display:dateDisplay,player,course,par:Math.round(par),course_rating:courseRating,slope,gross:Math.round(gross),course_hcp:courseHcp,net:net!=null?Math.round(net*10)/10:null,handicap_index:hcpIndex};
     allEntries.push(entry);
@@ -190,7 +211,7 @@ function parseScores(rows,players){
   return{allEntries,rounds_by_date};
 }
 
-function calcMonthlyPoints(allEntries){
+function calcMonthly(allEntries){
   const byMonth={};
   for(const e of allEntries){
     if(!e.net||!e.player)continue;
@@ -203,53 +224,44 @@ function calcMonthlyPoints(allEntries){
   }
   const monthlyResults={};
   for(const[mk,players]of Object.entries(byMonth)){
-    const playerStats=[];
+    const stats=[];
     for(const[player,rounds]of Object.entries(players)){
-      const sorted=[...rounds].sort((a,b)=>a.net-b.net);
-      const top5=sorted.slice(0,5);
+      const top5=[...rounds].sort((a,b)=>a.net-b.net).slice(0,5);
       const avg=Math.round(top5.reduce((s,r)=>s+r.net,0)/top5.length*10)/10;
-      playerStats.push({player,rounds_played:rounds.length,counted_rounds:top5.length,avg_net:avg});
+      stats.push({player,rounds_played:rounds.length,counted_rounds:top5.length,avg_net:avg});
     }
-    playerStats.sort((a,b)=>a.avg_net-b.avg_net);
-    playerStats.forEach((p,i)=>{p.position=i+1;p.points=POINTS_SCALE[Math.min(i,POINTS_SCALE.length-1)];});
-    monthlyResults[mk]=playerStats;
+    stats.sort((a,b)=>a.avg_net-b.avg_net);
+    stats.forEach((p,i)=>{p.position=i+1;p.points=POINTS_SCALE[Math.min(i,POINTS_SCALE.length-1)];});
+    monthlyResults[mk]=stats;
   }
   return monthlyResults;
 }
 
 function buildData(payload){
-  const registeredPlayers=parsePlayers(payload.players||[]);
-  const{allEntries,rounds_by_date}=parseScores(payload.scores||[],registeredPlayers);
-  const monthlyResults=calcMonthlyPoints(allEntries);
+  const players=parsePlayers(payload.players||[]);
+  parseSignups(payload.signups||[],players);
+  const{allEntries,rounds_by_date}=parseScores(payload.scores||[],players);
+  const monthlyResults=calcMonthly(allEntries);
 
-  // Build season totals from scores
   const seasonTotals={};
-  for(const[mk,players]of Object.entries(monthlyResults)){
-    for(const p of players){
-      if(!seasonTotals[p.player])seasonTotals[p.player]={player:p.player,total_points:0,months_played:0,rounds_played:0,monthly:{},handicap_index:registeredPlayers[p.player]?.handicap_index??null};
+  for(const[mk,ps]of Object.entries(monthlyResults)){
+    for(const p of ps){
+      if(!seasonTotals[p.player])seasonTotals[p.player]={player:p.player,total_points:0,months_played:0,rounds_played:0,monthly:{},handicap_index:players[p.player]?.handicap_index??null};
       seasonTotals[p.player].total_points+=p.points;
       seasonTotals[p.player].months_played++;
       seasonTotals[p.player].monthly[mk]={points:p.points,position:p.position,avg_net:p.avg_net,rounds_played:p.rounds_played,counted_rounds:p.counted_rounds};
     }
   }
-  // Count total rounds per player
-  for(const e of allEntries){
-    if(seasonTotals[e.player])seasonTotals[e.player].rounds_played++;
+  for(const e of allEntries){if(seasonTotals[e.player])seasonTotals[e.player].rounds_played++;}
+  for(const[name,info]of Object.entries(players)){
+    if(!seasonTotals[name])seasonTotals[name]={player:name,total_points:0,months_played:0,rounds_played:0,monthly:{},handicap_index:info.handicap_index,source:info.source||'roster'};
   }
 
-  // Merge registered players who haven't played yet
-  for(const[name,info]of Object.entries(registeredPlayers)){
-    if(!seasonTotals[name]){
-      seasonTotals[name]={player:name,total_points:0,months_played:0,rounds_played:0,monthly:{},handicap_index:info.handicap_index,registered_only:true};
-    }
-  }
-
-  // Sort: players with points first (by points desc), then registered-only alphabetically
-  const withPoints=Object.values(seasonTotals).filter(p=>p.total_points>0).sort((a,b)=>b.total_points-a.total_points);
-  const noPoints=Object.values(seasonTotals).filter(p=>p.total_points===0).sort((a,b)=>a.player.localeCompare(b.player));
-  const standings=[...withPoints,...noPoints];
-  withPoints.forEach((s,i)=>s.position=i+1);
-  noPoints.forEach(s=>s.position=null);
+  const withPts=Object.values(seasonTotals).filter(p=>p.total_points>0).sort((a,b)=>b.total_points-a.total_points);
+  const noPts=Object.values(seasonTotals).filter(p=>p.total_points===0).sort((a,b)=>a.player.localeCompare(b.player));
+  const standings=[...withPts,...noPts];
+  withPts.forEach((s,i)=>s.position=i+1);
+  noPts.forEach(s=>s.position=null);
 
   const rounds_list=Object.values(rounds_by_date).sort((a,b)=>b.date.localeCompare(a.date));
   rounds_list.forEach(rd=>rd.scores.sort((a,b)=>(a.net??999)-(b.net??999)));
@@ -258,7 +270,8 @@ function buildData(payload){
   return{
     settings:{season_name:SEASON_NAME,updated_at:new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'})},
     standings,monthlyResults,activeMonths,rounds:rounds_list,
-    totalRegistered:Object.keys(registeredPlayers).length
+    totalRegistered:Object.keys(players).length,
+    totalSignups:Object.values(players).filter(p=>p.source==='signup').length
   };
 }
 
@@ -287,26 +300,24 @@ function renderStandings(){
   const top3=withPoints.slice(0,3);
   let html='';
 
-  // Summary bar
   html+=`<div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
-    <div class="stat-card" style="flex:1;min-width:140px;padding:16px;">
+    <div class="stat-card" style="flex:1;min-width:130px;padding:16px;">
       <div class="stat-label">Registered</div>
       <div class="stat-value" style="font-size:28px">${totalRegistered}</div>
       <div class="stat-sub">players signed up</div>
     </div>
-    <div class="stat-card" style="flex:1;min-width:140px;padding:16px;">
+    <div class="stat-card" style="flex:1;min-width:130px;padding:16px;">
       <div class="stat-label">Active</div>
       <div class="stat-value" style="font-size:28px">${withPoints.length}</div>
       <div class="stat-sub">have played</div>
     </div>
-    <div class="stat-card" style="flex:1;min-width:140px;padding:16px;">
-      <div class="stat-label">Awaiting Tee Time</div>
+    <div class="stat-card" style="flex:1;min-width:130px;padding:16px;">
+      <div class="stat-label">Awaiting Tee</div>
       <div class="stat-value" style="font-size:28px">${standings.filter(p=>p.rounds_played===0).length}</div>
       <div class="stat-sub">yet to play</div>
     </div>
   </div>`;
 
-  // Podium
   if(top3.length){
     const medals=['🥇','🥈','🥉'],classes=['podium-1','podium-2','podium-3'],labels=['1ST PLACE','2ND PLACE','3RD PLACE'];
     html+='<div class="podium">';
@@ -314,7 +325,6 @@ function renderStandings(){
     html+='</div>';
   }
 
-  // Full table
   html+='<div class="card fade-up"><table class="lb-table"><thead><tr>';
   html+='<th>POS</th><th>PLAYER</th><th>HCP</th><th>SEASON PTS</th><th>ROUNDS</th><th>STATUS</th>';
   activeMonths.forEach(mk=>{html+=`<th>${monthLabel(mk).split(' ')[0]}</th>`;});
@@ -322,28 +332,24 @@ function renderStandings(){
 
   standings.forEach(p=>{
     const posClass=p.position===1?'p1':p.position===2?'p2':p.position===3?'p3':'';
-    const posLabel=p.position?p.position:'–';
-    let statusBadge='';
-    if(p.rounds_played===0){statusBadge='<span class="badge badge-reg">Registered</span>';}
-    else if(p.total_points>0&&p.position===1){statusBadge='<span class="badge badge-lead">🏆 Leading</span>';}
-    else{statusBadge='<span class="badge badge-active">Active</span>';}
+    let badge='';
+    if(p.rounds_played===0)badge='<span class="badge badge-reg">Registered</span>';
+    else if(p.position===1)badge='<span class="badge badge-lead">🏆 Leading</span>';
+    else badge='<span class="badge badge-active">Active</span>';
 
-    html+=`<tr>
-      <td><span class="lb-pos ${posClass}">${posLabel}</span></td>
-      <td><div class="lb-name">${p.player}</div></td>
-      <td>${p.handicap_index!=null?p.handicap_index:'–'}</td>
-      <td><span class="lb-pts">${p.total_points||'–'}</span></td>
-      <td>${p.rounds_played}</td>
-      <td>${statusBadge}</td>`;
+    html+=`<tr><td><span class="lb-pos ${posClass}">${p.position||'–'}</span></td>`;
+    html+=`<td><div class="lb-name">${p.player}</div>${p.handicap_index!=null?`<div class="lb-hcp">HCP ${p.handicap_index}</div>`:''}</td>`;
+    html+=`<td>${p.handicap_index!=null?p.handicap_index:'–'}</td>`;
+    html+=`<td><span class="lb-pts">${p.total_points||'–'}</span></td>`;
+    html+=`<td>${p.rounds_played}</td><td>${badge}</td>`;
     activeMonths.forEach(mk=>{
       const m=p.monthly[mk];
       if(m){const cls=m.position===1?'winner':'';html+=`<td><span class="month-pts ${cls}">${m.points}<br><small style="color:var(--text-light);font-size:10px">#${m.position}·${m.avg_net}</small></span></td>`;}
-      else{html+=`<td><span class="month-pts empty">–</span></td>`;}
+      else html+=`<td><span class="month-pts empty">–</span></td>`;
     });
     html+='</tr>';
   });
-
-  if(!standings.length)html+='<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--text-light)">No players yet — add them to the Players tab</td></tr>';
+  if(!standings.length)html+='<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--text-light)">No players yet</td></tr>';
   html+='</tbody></table></div>';
   document.getElementById('tab-standings').innerHTML=html;
 }
@@ -353,20 +359,13 @@ function renderMonthly(){
   if(!activeMonths.length){document.getElementById('tab-monthly').innerHTML='<div class="state-msg"><span class="emoji">📅</span><h3>No monthly data yet</h3><p>Season starts April 15, 2026</p></div>';return;}
   let html='';
   [...activeMonths].reverse().forEach((mk,idx)=>{
-    const players=monthlyResults[mk];
+    const ps=monthlyResults[mk];
     const id=`month-${mk}`;
-    const winner=players[0];
-    html+=`<div class="month-card fade-up">
-      <div class="month-header" onclick="toggleMonth('${id}')">
-        <div><div class="month-title">${monthLabel(mk)}</div>
-        <div class="month-sub">${players.length} players &nbsp;·&nbsp; ${winner?'🏆 '+winner.player+' ('+winner.avg_net+' avg net)':''}</div></div>
-        <span class="month-toggle ${idx===0?'open':''}" id="${id}-icon">▼</span>
-      </div>
-      <div class="month-body ${idx===0?'open':''}" id="${id}">
-        <table class="lb-table"><thead><tr><th>POS</th><th>PLAYER</th><th>MONTHLY PTS</th><th>ROUNDS PLAYED</th><th>ROUNDS COUNTED</th><th>AVG NET (TOP 5)</th></tr></thead><tbody>`;
-    players.forEach(p=>{
-      const posClass=p.position===1?'p1':p.position===2?'p2':p.position===3?'p3':'';
-      html+=`<tr><td><span class="lb-pos ${posClass}">${p.position}</span></td><td><div class="lb-name">${p.player}</div></td><td><span class="lb-pts">${p.points}</span></td><td>${p.rounds_played}</td><td>${p.counted_rounds}</td><td>${p.avg_net}</td></tr>`;
+    const w=ps[0];
+    html+=`<div class="month-card fade-up"><div class="month-header" onclick="toggleMonth('${id}')"><div><div class="month-title">${monthLabel(mk)}</div><div class="month-sub">${ps.length} players &nbsp;·&nbsp; ${w?'🏆 '+w.player+' ('+w.avg_net+' avg net)':''}</div></div><span class="month-toggle ${idx===0?'open':''}" id="${id}-icon">▼</span></div><div class="month-body ${idx===0?'open':''}" id="${id}"><table class="lb-table"><thead><tr><th>POS</th><th>PLAYER</th><th>MONTHLY PTS</th><th>ROUNDS PLAYED</th><th>ROUNDS COUNTED</th><th>AVG NET (TOP 5)</th></tr></thead><tbody>`;
+    ps.forEach(p=>{
+      const pc=p.position===1?'p1':p.position===2?'p2':p.position===3?'p3':'';
+      html+=`<tr><td><span class="lb-pos ${pc}">${p.position}</span></td><td><div class="lb-name">${p.player}</div></td><td><span class="lb-pts">${p.points}</span></td><td>${p.rounds_played}</td><td>${p.counted_rounds}</td><td>${p.avg_net}</td></tr>`;
     });
     html+='</tbody></table></div></div>';
   });
@@ -407,7 +406,7 @@ function renderRules(){
     </div>
     <div style="margin-bottom:28px;">
       <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">📅 How Monthly Scoring Works</div>
-      <p style="color:var(--cream);font-size:14px;">Each month, every player's <strong>5 best net scores</strong> are counted. Players are ranked by average net score across those 5 rounds — lower is better. Monthly points are awarded based on that ranking. Play more than 5 rounds? Only your best 5 count. Play fewer than 5? Your average is based on however many you played — you're at a natural disadvantage.</p>
+      <p style="color:var(--cream);font-size:14px;">Each month, every player's <strong>5 best net scores</strong> are counted. Players are ranked by average net score across those 5 rounds — lower is better. Monthly points are awarded based on that ranking. Play more than 5 rounds? Only your best 5 count. Play fewer than 5? Your average is based on however many you played.</p>
     </div>
     <div style="margin-bottom:28px;">
       <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">⛳ How Net Score Works</div>
@@ -420,13 +419,13 @@ function renderRules(){
     </div>
     <div style="margin-bottom:28px;">
       <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">🎯 Monthly Points Scale</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-bottom:12px;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;">
         ${[['🥇 1st','20'],['🥈 2nd','17'],['🥉 3rd','15'],['4th','13'],['5th','11'],['6th','9'],['7th','7'],['8th','5'],['9th','3'],['10th','2'],['11th+','1']].map(([p,pts])=>`<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:12px;color:var(--cream);font-weight:600;">${p}</div><div style="font-family:'DM Mono',monospace;color:var(--gold-light);font-size:15px;margin-top:4px;">${pts} pts</div></div>`).join('')}
       </div>
     </div>
     <div style="margin-bottom:28px;">
-      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">📱 Posting Scores</div>
-      <p style="color:var(--cream);font-size:14px;">Post all rounds to <strong>Grint</strong> as normal. Scores are collected and updated here monthly. Keep your Grint handicap index current — Course HCP is calculated from it automatically.</p>
+      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">📱 How to Sign Up & Post Scores</div>
+      <p style="color:var(--cream);font-size:14px;">Click <strong>"Join the Cup"</strong> at the top of the page to register. Post all rounds to <strong>Grint</strong> as normal — scores are collected monthly. Keep your Grint handicap index current.</p>
     </div>
     <div style="margin-bottom:8px;">
       <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">🍺 The Prize</div>
