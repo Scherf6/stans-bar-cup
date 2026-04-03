@@ -3,76 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stan's Bar Cup 2026</title>
+<title>Laker Stan's Cup 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --green-deep:#0d2b1a;--green-dark:#163d26;--green-mid:#1e5c38;--green-bright:#2d8653;--green-light:#4caf76;
-    --gold:#c9a84c;--gold-light:#f0d080;--silver:#a8b4b8;--bronze:#b87333;
+    --red-deep:#111111;--red-dark:#1e1e1e;--red-mid:#2a2a2a;--red-bright:#c41e3a;--red-light:#e05c5c;
+    --gray-dark:#2a2a2a;--gray-mid:#4a4a4a;--gray-light:#9a9a9a;
+    --silver:#a8b4b8;--bronze:#b87333;
     --cream:#f5f0e8;--text-light:#8a8a8a;
+    --gold:#c41e3a;--gold-light:#e87878;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--green-deep);color:var(--cream);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
-  body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% -10%,rgba(45,134,83,0.18) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 90% 110%,rgba(13,43,26,0.8) 0%,transparent 60%),repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,255,255,0.012) 40px,rgba(255,255,255,0.012) 41px);pointer-events:none;z-index:0;}
+  body{background:#1a1a1a;color:var(--cream);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% -10%,rgba(196,30,58,0.10) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 90% 110%,rgba(17,17,17,0.8) 0%,transparent 60%),repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,255,255,0.012) 40px,rgba(255,255,255,0.012) 41px);pointer-events:none;z-index:0;}
   .page-wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 60px;}
   .site-header{text-align:center;padding:56px 20px 16px;}
-  .header-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--green-light);margin-bottom:14px;opacity:0.9;}
+  .header-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--red-light);margin-bottom:14px;opacity:0.9;}
   .header-title{font-family:'Playfair Display',serif;font-size:clamp(36px,7vw,72px);font-weight:900;line-height:1.0;color:var(--cream);letter-spacing:-1px;text-shadow:0 2px 24px rgba(0,0,0,0.4);}
-  .header-title span{color:var(--gold);display:block;}
-  .header-meta{margin-top:18px;font-size:13px;color:var(--green-light);font-weight:300;letter-spacing:0.5px;}
+  .header-title span{color:var(--red-bright);display:block;}
+  .header-meta{margin-top:18px;font-size:13px;color:var(--red-light);font-weight:300;letter-spacing:0.5px;}
   .header-meta strong{color:var(--gold-light);font-weight:500;}
+  .laker-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(196,30,58,0.15);border:1px solid rgba(196,30,58,0.3);border-radius:100px;padding:6px 16px;margin-top:12px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red-light);}
   .join-btn-wrap{text-align:center;margin:20px 0 0;}
-  .join-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(160deg,#3d2800,#1a1000);border:1px solid var(--gold);color:var(--gold-light);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;padding:12px 28px;border-radius:100px;cursor:pointer;transition:all 0.2s;letter-spacing:0.5px;outline:none;}
-  .join-btn:hover{background:linear-gradient(160deg,#5a3d00,#2a1800);transform:translateY(-2px);}
+  .join-btn{display:inline-flex;align-items:center;gap:8px;background:var(--red-bright);border:1px solid rgba(255,255,255,0.2);color:white;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;padding:12px 28px;border-radius:100px;cursor:pointer;transition:all 0.2s;letter-spacing:0.5px;outline:none;}
+  .join-btn:hover{background:#a01830;transform:translateY(-2px);}
   .join-btn-sub{font-size:11px;color:var(--text-light);margin-top:8px;font-family:'DM Mono',monospace;}
   .tabs{display:flex;justify-content:center;gap:6px;margin:28px 0 28px;flex-wrap:wrap;}
   .tab{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.5px;padding:10px 24px;border-radius:100px;cursor:pointer;transition:all 0.2s;outline:none;}
   .tab:hover{background:rgba(255,255,255,0.12);}
-  .tab.active{background:var(--gold);border-color:var(--gold);color:var(--green-deep);font-weight:600;}
+  .tab.active{background:var(--red-bright);border-color:var(--red-bright);color:white;font-weight:600;}
   .card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:16px;backdrop-filter:blur(8px);overflow:hidden;}
   .podium{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:28px;}
   .podium-card{border-radius:14px;padding:24px 16px 20px;text-align:center;position:relative;overflow:hidden;transition:transform 0.2s;}
   .podium-card:hover{transform:translateY(-3px);}
   .podium-card::before{content:'';position:absolute;inset:0;opacity:0.12;background:radial-gradient(circle at 50% 0%,white,transparent 70%);}
-  .podium-1{background:linear-gradient(160deg,#3d2800,#1a1000);border:1px solid var(--gold);}
-  .podium-2{background:linear-gradient(160deg,#1e2a2e,#0e1518);border:1px solid var(--silver);}
-  .podium-3{background:linear-gradient(160deg,#2e1a08,#160d04);border:1px solid var(--bronze);}
+  .podium-1{background:linear-gradient(160deg,#6b1515,#2d0a0a);border:1px solid var(--red-bright);}
+  .podium-2{background:linear-gradient(160deg,#3a3a3a,#222222);border:1px solid var(--silver);}
+  .podium-3{background:linear-gradient(160deg,#2a2a2a,#1a1a1a);border:1px solid var(--bronze);}
   .podium-medal{font-size:28px;display:block;margin-bottom:8px;}
   .podium-pos{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
-  .podium-1 .podium-pos{color:var(--gold);}
+  .podium-1 .podium-pos{color:var(--red-bright);}
   .podium-2 .podium-pos{color:var(--silver);}
   .podium-3 .podium-pos{color:var(--bronze);}
   .podium-name{font-family:'Playfair Display',serif;font-size:clamp(15px,2.5vw,20px);font-weight:700;color:var(--cream);margin-bottom:8px;line-height:1.2;}
   .podium-pts{font-size:28px;font-weight:600;color:var(--gold-light);font-family:'DM Mono',monospace;display:block;}
   .podium-sub{font-size:11px;color:var(--text-light);margin-top:4px;}
   .lb-table{width:100%;border-collapse:collapse;}
-  .lb-table th{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--green-light);padding:12px 16px;text-align:right;border-bottom:1px solid rgba(255,255,255,0.08);white-space:nowrap;}
+  .lb-table th{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--red-light);padding:12px 16px;text-align:right;border-bottom:1px solid rgba(255,255,255,0.08);white-space:nowrap;}
   .lb-table th:nth-child(2){text-align:left;}
   .lb-table td{padding:12px 16px;text-align:right;font-size:14px;border-bottom:1px solid rgba(255,255,255,0.05);white-space:nowrap;transition:background 0.15s;}
   .lb-table td:nth-child(2){text-align:left;}
   .lb-table tr:last-child td{border-bottom:none;}
   .lb-table tbody tr:hover td{background:rgba(255,255,255,0.04);}
   .lb-pos{font-family:'DM Mono',monospace;font-size:13px;color:var(--text-light);font-weight:500;}
-  .lb-pos.p1{color:var(--gold);}
+  .lb-pos.p1{color:var(--red-bright);}
   .lb-pos.p2{color:var(--silver);}
   .lb-pos.p3{color:var(--bronze);}
   .lb-name{font-weight:600;font-size:15px;color:var(--cream);}
   .lb-hcp{font-size:12px;color:var(--text-light);margin-top:2px;}
   .lb-pts{font-family:'DM Mono',monospace;font-size:16px;font-weight:500;color:var(--gold-light);}
   .month-pts{font-family:'DM Mono',monospace;font-size:13px;color:var(--cream);}
-  .month-pts.winner{color:var(--gold);font-weight:700;}
+  .month-pts.winner{color:var(--red-bright);font-weight:700;}
   .month-pts.empty{color:rgba(255,255,255,0.2);}
   .badge{display:inline-block;font-size:10px;font-family:'DM Mono',monospace;letter-spacing:1px;padding:3px 9px;border-radius:100px;text-transform:uppercase;font-weight:500;}
-  .badge-reg{background:rgba(76,175,118,0.15);color:var(--green-light);border:1px solid rgba(76,175,118,0.25);}
-  .badge-active{background:rgba(201,168,76,0.2);color:var(--gold);border:1px solid rgba(201,168,76,0.3);}
-  .badge-lead{background:rgba(201,168,76,0.35);color:var(--gold-light);border:1px solid var(--gold);font-weight:700;}
+  .badge-reg{background:rgba(154,154,154,0.15);color:var(--gray-light);border:1px solid rgba(154,154,154,0.25);}
+  .badge-active{background:rgba(196,30,58,0.2);color:var(--red-bright);border:1px solid rgba(196,30,58,0.3);}
+  .badge-lead{background:rgba(196,30,58,0.35);color:var(--gold-light);border:1px solid var(--red-bright);font-weight:700;}
   .month-card{border-radius:14px;overflow:hidden;margin-bottom:16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);}
   .month-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:rgba(255,255,255,0.05);cursor:pointer;user-select:none;transition:background 0.15s;}
   .month-header:hover{background:rgba(255,255,255,0.09);}
   .month-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--cream);}
   .month-sub{font-size:12px;color:var(--text-light);margin-top:2px;}
-  .month-toggle{color:var(--green-light);font-size:20px;transition:transform 0.2s;}
+  .month-toggle{color:var(--red-light);font-size:20px;transition:transform 0.2s;}
   .month-toggle.open{transform:rotate(180deg);}
   .month-body{display:none;}
   .month-body.open{display:block;}
@@ -81,59 +84,54 @@
   .round-header:hover{background:rgba(255,255,255,0.09);}
   .round-date{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--cream);}
   .round-course{font-size:12px;color:var(--text-light);margin-top:2px;}
-  .round-toggle{color:var(--green-light);font-size:20px;transition:transform 0.2s;}
+  .round-toggle{color:var(--red-light);font-size:20px;transition:transform 0.2s;}
   .round-toggle.open{transform:rotate(180deg);}
   .round-scores{display:none;}
   .round-scores.open{display:block;}
   .score-row{display:grid;grid-template-columns:36px 1fr 58px 58px 58px 58px;align-items:center;padding:10px 20px;border-top:1px solid rgba(255,255,255,0.05);font-size:13px;}
   .score-row:nth-child(even){background:rgba(255,255,255,0.02);}
   .score-place{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--text-light);}
-  .score-place.p1{color:var(--gold);}
+  .score-place.p1{color:var(--red-bright);}
   .score-name{font-weight:500;color:var(--cream);}
   .score-val{text-align:right;font-family:'DM Mono',monospace;color:var(--cream);}
   .score-net{text-align:right;font-family:'DM Mono',monospace;color:var(--gold-light);font-weight:600;}
-  .score-pts{text-align:right;font-family:'DM Mono',monospace;color:var(--green-light);font-size:12px;}
+  .score-pts{text-align:right;font-family:'DM Mono',monospace;color:var(--red-light);font-size:12px;}
   .score-col-hdr{display:grid;grid-template-columns:36px 1fr 58px 58px 58px 58px;padding:8px 20px;background:rgba(0,0,0,0.2);border-top:1px solid rgba(255,255,255,0.06);}
-  .score-col-hdr span{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--green-light);text-align:right;}
+  .score-col-hdr span{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red-light);text-align:right;}
   .score-col-hdr span:nth-child(2){text-align:left;}
   .stat-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:12px;padding:20px;text-align:center;}
   .stat-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);font-family:'DM Mono',monospace;margin-bottom:10px;}
-  .stat-value{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--gold);}
+  .stat-value{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--red-bright);}
   .stat-sub{font-size:12px;color:var(--text-light);margin-top:4px;}
   .state-msg{text-align:center;padding:80px 20px;color:var(--text-light);}
   .state-msg .emoji{font-size:48px;display:block;margin-bottom:16px;}
   .state-msg h3{font-family:'Playfair Display',serif;font-size:22px;color:var(--cream);margin-bottom:8px;}
   .site-footer{text-align:center;padding:32px 20px;font-size:11px;color:rgba(255,255,255,0.2);font-family:'DM Mono',monospace;letter-spacing:1px;}
-
-  /* ── MODAL ── */
   .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.25s;}
   .modal-overlay.open{opacity:1;pointer-events:all;}
-  .modal{background:var(--green-dark);border:1px solid rgba(201,168,76,0.4);border-radius:20px;padding:36px 32px;width:100%;max-width:440px;position:relative;transform:translateY(24px);transition:transform 0.25s;}
+  .modal{background:#1e1e1e;border:1px solid rgba(196,30,58,0.4);border-radius:20px;padding:36px 32px;width:100%;max-width:440px;position:relative;transform:translateY(24px);transition:transform 0.25s;}
   .modal-overlay.open .modal{transform:translateY(0);}
   .modal-close{position:absolute;top:16px;right:18px;background:none;border:none;color:var(--text-light);font-size:22px;cursor:pointer;line-height:1;padding:4px;}
   .modal-close:hover{color:var(--cream);}
-  .modal-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--green-light);margin-bottom:10px;}
+  .modal-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--red-light);margin-bottom:10px;}
   .modal-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:var(--cream);margin-bottom:4px;}
-  .modal-title span{color:var(--gold);}
+  .modal-title span{color:var(--red-bright);}
   .modal-sub{font-size:12px;color:var(--text-light);margin-bottom:28px;}
   .field{margin-bottom:18px;}
-  .field label{display:block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--green-light);margin-bottom:8px;}
+  .field label{display:block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red-light);margin-bottom:8px;}
   .field input{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:13px 16px;color:var(--cream);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;}
-  .field input:focus{border-color:var(--gold);}
+  .field input:focus{border-color:var(--red-bright);}
   .field input::placeholder{color:rgba(255,255,255,0.25);}
-  .submit-btn{width:100%;background:linear-gradient(160deg,#3d2800,#1a1000);border:1px solid var(--gold);color:var(--gold-light);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;padding:14px;border-radius:12px;cursor:pointer;transition:all 0.2s;margin-top:4px;letter-spacing:0.5px;}
-  .submit-btn:hover{background:linear-gradient(160deg,#5a3d00,#2a1800);}
+  .submit-btn{width:100%;background:var(--red-bright);border:none;color:white;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;padding:14px;border-radius:12px;cursor:pointer;transition:all 0.2s;margin-top:4px;letter-spacing:0.5px;}
+  .submit-btn:hover{background:#a01830;}
   .submit-btn:disabled{opacity:0.5;cursor:not-allowed;}
   .form-msg{text-align:center;font-size:13px;margin-top:14px;min-height:20px;}
-  .form-msg.success{color:var(--green-light);}
+  .form-msg.success{color:var(--red-light);}
   .form-msg.error{color:#ff8a8a;}
-
-  /* ── success screen ── */
   .success-screen{text-align:center;padding:12px 0;}
   .success-icon{font-size:52px;display:block;margin-bottom:16px;}
   .success-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:var(--cream);margin-bottom:8px;}
   .success-sub{font-size:13px;color:var(--text-light);line-height:1.6;}
-
   @media(max-width:640px){
     .podium{grid-template-columns:1fr;max-width:280px;margin-left:auto;margin-right:auto;}
     .lb-table th:nth-child(n+5),.lb-table td:nth-child(n+5){display:none;}
@@ -151,13 +149,12 @@
 </head>
 <body>
 
-<!-- ── SIGNUP MODAL ── -->
 <div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div id="modal-form-content">
       <div class="modal-eyebrow">⛳ 2026 Season</div>
-      <div class="modal-title">Join the <span>Stan's Bar Cup</span></div>
+      <div class="modal-title">Join the <span>Laker Stan's Cup</span></div>
       <div class="modal-sub">April 15 – October 31 &nbsp;·&nbsp; Free to enter</div>
       <div class="field">
         <label>Full Name</label>
@@ -178,7 +175,7 @@
       <div class="success-screen">
         <span class="success-icon">🏆</span>
         <div class="success-title">You're in!</div>
-        <div class="success-sub">Welcome to the Stan's Bar Cup 2026.<br>Post your rounds to Grint and you'll appear on the leaderboard.<br><br>See you on the course. ⛳</div>
+        <div class="success-sub">Welcome to the Laker Stan's Cup 2026.<br>Post your rounds to Grint and you'll appear on the leaderboard.<br><br>Go Lakers! ⛳</div>
       </div>
     </div>
   </div>
@@ -187,8 +184,9 @@
 <div class="page-wrap">
   <header class="site-header fade-up">
     <div class="header-eyebrow">⛳ Season Standings</div>
-    <h1 class="header-title" id="season-title">Stan's Bar<span>Cup</span></h1>
-    <p class="header-meta">Last updated: <strong id="updated-at">loading...</strong></p>
+    <h1 class="header-title" id="season-title">Laker Stan's<span>Cup</span></h1>
+    <div class="laker-tag">🔴 Spring Lake Lakers · Est. 1962</div>
+    <p class="header-meta" style="margin-top:12px;">Last updated: <strong id="updated-at">loading...</strong></p>
     <div class="join-btn-wrap">
       <button class="join-btn" onclick="openModal()">⛳ &nbsp;Join the Cup</button>
       <div class="join-btn-sub">Sign up to compete · Free to enter</div>
@@ -207,69 +205,52 @@
   <div id="tab-rules" style="display:none"></div>
 </div>
 
-<footer class="site-footer">⛳ Stan's Bar Cup 2026 &nbsp;·&nbsp; Powered by Grint + GitHub Pages</footer>
+<footer class="site-footer">⛳ Laker Stan's Cup 2026 &nbsp;·&nbsp; Spring Lake Lakers &nbsp;·&nbsp; Powered by Grint + GitHub Pages</footer>
 
 <script>
 let DATA = null;
-const SEASON_NAME  = "2026 Golf Season";
+const SEASON_NAME  = "Laker Stan's Cup";
 const SCRIPT_URL   = "https://script.google.com/macros/s/AKfycbyqvcD5IveceZHFHYsy5_fQe_GO3IqOFYCURVPSQhlNwddyd3TauSJkNE--JdVml1QQvw/exec";
 const POINTS_SCALE = [20,17,15,13,11,9,7,5,3,2,1];
 const SEASON_START = new Date("2026-04-15");
 const SEASON_END   = new Date("2026-10-31");
 
-// ── Modal ──────────────────────────────────────────────────────────────────
-function openModal(){
-  document.getElementById('modal-overlay').classList.add('open');
-  document.body.style.overflow='hidden';
-  setTimeout(()=>document.getElementById('f-name').focus(),300);
-}
-function closeModal(){
-  document.getElementById('modal-overlay').classList.remove('open');
-  document.body.style.overflow='';
-}
+function openModal(){document.getElementById('modal-overlay').classList.add('open');document.body.style.overflow='hidden';setTimeout(()=>document.getElementById('f-name').focus(),300);}
+function closeModal(){document.getElementById('modal-overlay').classList.remove('open');document.body.style.overflow='';}
 function handleOverlayClick(e){if(e.target===document.getElementById('modal-overlay'))closeModal();}
 
 async function submitSignup(){
-  const name   = document.getElementById('f-name').value.trim();
-  const grint  = document.getElementById('f-grint').value.trim();
-  const email  = document.getElementById('f-email').value.trim();
-  const msg    = document.getElementById('form-msg');
-  const btn    = document.getElementById('submit-btn');
-
+  const name=document.getElementById('f-name').value.trim();
+  const grint=document.getElementById('f-grint').value.trim();
+  const email=document.getElementById('f-email').value.trim();
+  const msg=document.getElementById('form-msg');
+  const btn=document.getElementById('submit-btn');
   if(!name){msg.textContent='Please enter your name.';msg.className='form-msg error';return;}
   if(!grint){msg.textContent='Please enter your Grint username.';msg.className='form-msg error';return;}
   if(!email||!email.includes('@')){msg.textContent='Please enter a valid email.';msg.className='form-msg error';return;}
-
-  btn.disabled=true;
-  btn.textContent='Submitting...';
-  msg.textContent='';
-
+  btn.disabled=true;btn.textContent='Submitting...';msg.textContent='';
   try{
     const url=`${SCRIPT_URL}?action=signup&name=${encodeURIComponent(name)}&grint_id=${encodeURIComponent(grint)}&email=${encodeURIComponent(email)}`;
     await fetch(url,{method:'GET',mode:'no-cors'});
     document.getElementById('modal-form-content').style.display='none';
     document.getElementById('modal-success').style.display='block';
-    setTimeout(()=>{ loadData(); },2000);
+    setTimeout(()=>{loadData();},2000);
   }catch(e){
     msg.textContent='Something went wrong. Please try again.';
     msg.className='form-msg error';
-    btn.disabled=false;
-    btn.textContent='⛳  Join the Cup';
+    btn.disabled=false;btn.textContent='⛳  Join the Cup';
   }
 }
 
-// ── Data helpers ───────────────────────────────────────────────────────────
 function monthKey(d){return`${new Date(d).getFullYear()}-${String(new Date(d).getMonth()+1).padStart(2,'0')}`;}
 function monthLabel(k){const[y,m]=k.split('-');return new Date(y,m-1,1).toLocaleDateString('en-US',{month:'long',year:'numeric'});}
 
 function parsePlayers(rows){
-  const p={};
-  let hi=-1;
+  const p={};let hi=-1;
   for(let i=0;i<rows.length;i++){if(rows[i][1]&&String(rows[i][1]).toUpperCase().includes('PLAYER')){hi=i;break;}}
   if(hi===-1)return p;
   for(const r of rows.slice(hi+1)){
-    const n=r[1]?String(r[1]).trim():null;
-    if(!n)continue;
+    const n=r[1]?String(r[1]).trim():null;if(!n)continue;
     const hcp=r[3]!=null&&String(r[3]).charAt(0)!=='#'?parseFloat(r[3]):null;
     p[n]={name:n,handicap_index:hcp,grint_username:r[2]?String(r[2]).trim():null,source:'roster'};
   }
@@ -279,8 +260,7 @@ function parsePlayers(rows){
 function parseSignups(rows,players){
   if(!rows||rows.length<2)return;
   for(const r of rows.slice(1)){
-    const name=r[1]?String(r[1]).trim():null;
-    if(!name)continue;
+    const name=r[1]?String(r[1]).trim():null;if(!name)continue;
     if(!players[name])players[name]={name,handicap_index:null,grint_username:r[2]?String(r[2]).trim():null,email:r[3]?String(r[3]).trim():null,source:'signup'};
   }
 }
@@ -329,9 +309,9 @@ function calcMonthly(allEntries){
   for(const[mk,players]of Object.entries(byMonth)){
     const stats=[];
     for(const[player,rounds]of Object.entries(players)){
-      const top5=[...rounds].sort((a,b)=>a.net-b.net).slice(0,5);
-      const avg=Math.round(top5.reduce((s,r)=>s+r.net,0)/top5.length*10)/10;
-      stats.push({player,rounds_played:rounds.length,counted_rounds:top5.length,avg_net:avg});
+      const top4=[...rounds].sort((a,b)=>a.net-b.net).slice(0,4);
+      const avg=Math.round(top4.reduce((s,r)=>s+r.net,0)/top4.length*10)/10;
+      stats.push({player,rounds_played:rounds.length,counted_rounds:top4.length,avg_net:avg});
     }
     stats.sort((a,b)=>a.avg_net-b.avg_net);
     stats.forEach((p,i)=>{p.position=i+1;p.points=POINTS_SCALE[Math.min(i,POINTS_SCALE.length-1)];});
@@ -456,16 +436,18 @@ function renderRules(){
   if(el.innerHTML)return;
   el.innerHTML=`<div class="card fade-up" style="padding:32px 36px;line-height:1.8;">
     <div style="text-align:center;margin-bottom:32px;">
-      <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--green-light);margin-bottom:10px;">Official Competition Rules</div>
-      <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--cream);">Stan's Bar Cup</div>
-      <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--gold);margin-top:6px;">2026 Season &nbsp;·&nbsp; April 15 – October 31</div>
+      <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--red-light);margin-bottom:10px;">Official Competition Rules</div>
+      <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--cream);">Laker Stan's Cup</div>
+      <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--red-bright);margin-top:6px;">2026 Season &nbsp;·&nbsp; April 15 – October 31</div>
     </div>
-    <div style="margin-bottom:28px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">🏆 The Competition</div><p style="color:var(--cream);font-size:14px;">The Stan's Bar Cup is a season-long, FedEx Cup-style points race running <strong>April 15 – October 31, 2026</strong>. Points are awarded monthly. The player with the most cumulative season points wins the Cup.</p></div>
-    <div style="margin-bottom:28px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">📅 How Monthly Scoring Works</div><p style="color:var(--cream);font-size:14px;">Each month, every player's <strong>5 best net scores</strong> are counted. Players are ranked by average net score across those 5 rounds — lower is better. Monthly points are awarded based on that ranking. Play more than 5 rounds? Only your best 5 count. Play fewer? Your average is based on however many you played.</p></div>
-    <div style="margin-bottom:28px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">⛳ How Net Score Works</div><p style="color:var(--cream);font-size:14px;">Net scores use the official <strong>USGA Course Handicap formula</strong>:</p><div style="background:rgba(0,0,0,0.3);border-left:3px solid var(--gold);padding:14px 20px;border-radius:8px;margin:14px 0;font-family:'DM Mono',monospace;font-size:13px;color:var(--gold-light);">Course HCP = ROUND(HCP Index × (Slope ÷ 113) + (Course Rating − Par), 0)<br>Net Score = Gross Score − Course HCP</div><p style="color:var(--cream);font-size:14px;">Every course is equalized — a tough track gives you more strokes, an easy one fewer.</p></div>
-    <div style="margin-bottom:28px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">🎯 Monthly Points Scale</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;">${[['🥇 1st','20'],['🥈 2nd','17'],['🥉 3rd','15'],['4th','13'],['5th','11'],['6th','9'],['7th','7'],['8th','5'],['9th','3'],['10th','2'],['11th+','1']].map(([p,pts])=>`<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:12px;color:var(--cream);font-weight:600;">${p}</div><div style="font-family:'DM Mono',monospace;color:var(--gold-light);font-size:15px;margin-top:4px;">${pts} pts</div></div>`).join('')}</div></div>
-    <div style="margin-bottom:28px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">📱 How to Sign Up & Post Scores</div><p style="color:var(--cream);font-size:14px;">Click <strong>"Join the Cup"</strong> at the top of the page to register. Post all rounds to <strong>Grint</strong> as normal — scores are collected monthly. Keep your Grint handicap index current.</p></div>
-    <div style="margin-bottom:8px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-bottom:10px;">🍺 The Prize</div><p style="color:var(--cream);font-size:14px;">The season champion receives the <strong>Stan's Bar Cup</strong> — a custom engraved trophy that lives at Stan's Bar. The winner gets it filled with beer on the house at the end-of-season celebration. Proudly sponsored by Stan's Bar.</p></div>
+    <div style="margin-bottom:28px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--red-bright);margin-bottom:10px;">🏆 The Competition</div><p style="color:var(--cream);font-size:14px;">The Laker Stan's Cup is a season-long, FedEx Cup-style points race running <strong>April 15 – October 31, 2026</strong>. Proudly representing Spring Lake Lakers country. Points are awarded monthly — the player with the most cumulative season points wins the Cup.</p></div>
+    <div style="margin-bottom:28px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--red-bright);margin-bottom:10px;">📅 How Monthly Scoring Works</div><p style="color:var(--cream);font-size:14px;">Each month, every player's <strong>4 best net scores</strong> are counted. Players are ranked by average net score across those 4 rounds — lower is better. Monthly points are awarded based on that ranking. Play more than 4 rounds? Only your best 4 count. Play fewer? Your average is based on however many you played — you're at a natural disadvantage.</p></div>
+    <div style="margin-bottom:28px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--red-bright);margin-bottom:10px;">📋 Round Logging Rules</div><p style="color:var(--cream);font-size:14px;"><strong>All rounds must be logged</strong> — no cherry picking. Every round you play counts toward your monthly average whether you want it to or not. The only exception is <strong>scrambles</strong>, which may be excluded since they don't reflect individual scoring. If you played it, post it.</p></div>
+    <div style="margin-bottom:28px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--red-bright);margin-bottom:10px;">📜 Rules of Golf</div><p style="color:var(--cream);font-size:14px;">All players commit to playing by the <strong>Rules of Golf</strong> regardless of any special local rules their home course or league may allow. This means:</p><ul style="color:var(--cream);font-size:14px;margin-top:10px;padding-left:20px;line-height:2.0;"><li><strong>Play the ball down</strong> — no improving your lie unless conditions absolutely require lift, clean and place (wet/muddy conditions)</li><li><strong>No gimme putts</strong> — hole everything out</li><li><strong>Count every stroke</strong> — whiffs, practice swings that make contact, penalty strokes</li><li><strong>Proper relief procedures</strong> — follow USGA rules for out of bounds, water hazards, and unplayable lies</li><li>If your regular group plays with local rules or shortcuts, those do not apply for Laker Stan's Cup rounds</li></ul><p style="color:var(--cream);font-size:14px;margin-top:12px;">The integrity of the competition depends on everyone holding the same standard. When in doubt, play it as it lies. ⛳</p></div>
+    <div style="margin-bottom:28px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--red-bright);margin-bottom:10px;">⛳ How Net Score Works</div><p style="color:var(--cream);font-size:14px;">Net scores use the official <strong>USGA Course Handicap formula</strong>:</p><div style="background:rgba(0,0,0,0.3);border-left:3px solid var(--red-bright);padding:14px 20px;border-radius:8px;margin:14px 0;font-family:'DM Mono',monospace;font-size:13px;color:var(--gold-light);">Course HCP = ROUND(HCP Index × (Slope ÷ 113) + (Course Rating − Par), 0)<br>Net Score = Gross Score − Course HCP</div></div>
+    <div style="margin-bottom:28px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--red-bright);margin-bottom:10px;">🎯 Monthly Points Scale</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;">${[['🥇 1st','20'],['🥈 2nd','17'],['🥉 3rd','15'],['4th','13'],['5th','11'],['6th','9'],['7th','7'],['8th','5'],['9th','3'],['10th','2'],['11th+','1']].map(([p,pts])=>`<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px;text-align:center;"><div style="font-size:12px;color:var(--cream);font-weight:600;">${p}</div><div style="font-family:'DM Mono',monospace;color:var(--gold-light);font-size:15px;margin-top:4px;">${pts} pts</div></div>`).join('')}</div></div>
+    <div style="margin-bottom:28px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--red-bright);margin-bottom:10px;">📱 How to Sign Up & Post Scores</div><p style="color:var(--cream);font-size:14px;">Click <strong>"Join the Cup"</strong> at the top of the page to register. Post all rounds to <strong>Grint</strong> as normal — scores are collected monthly.</p></div>
+    <div style="margin-bottom:8px;"><div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--red-bright);margin-bottom:10px;">🍺 The Prize</div><p style="color:var(--cream);font-size:14px;">The season champion receives the <strong>Laker Stan's Cup</strong> — a custom engraved trophy that lives at Stan's Bar. The winner gets it filled with beer on the house. Go Lakers! 🔴</p></div>
   </div>`;
 }
 
